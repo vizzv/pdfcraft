@@ -64,18 +64,6 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
             <p className="text-sm text-[hsl(var(--color-muted-foreground))] leading-relaxed max-w-xs">
               {t('tagline') || 'Professional, secure, and free PDF tools for everyone. No installation required.'}
             </p>
-
-            <div className="flex gap-4">
-              <a href="https://github.com/PDFCraftTool/pdfcraft" className="p-2 rounded-full bg-[hsl(var(--color-muted))] text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-primary))] hover:text-white transition-all">
-                <Github className="w-4 h-4" />
-              </a>
-              <a href="https://x.com/PDFCraftTool" className="p-2 rounded-full bg-[hsl(var(--color-muted))] text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-primary))] hover:text-white transition-all">
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a href="#" className="p-2 rounded-full bg-[hsl(var(--color-muted))] text-[hsl(var(--color-muted-foreground))] hover:bg-[hsl(var(--color-primary))] hover:text-white transition-all">
-                <Mail className="w-4 h-4" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -131,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
               Compliance
             </h3>
             <div
-              className="flex items-center gap-3 p-4 bg-[hsl(var(--color-card))] border border-[hsl(var(--color-border))] rounded-xl shadow-sm"
+              className="flex items-center gap-3 p-4 shadow-sm"
             >
               <div className="h-10 w-10 rounded-full bg-[hsl(var(--color-success)/0.1)] flex items-center justify-center flex-shrink-0">
                 <Shield className="h-5 w-5 text-[hsl(var(--color-success))]" aria-hidden="true" />

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOOL_CONTENT_DIR = 'd:\\NextProject\\pdfcraft\\src\\config\\tool-content';
+const TOOL_CONTENT_DIR = 'd:\\NextProject\\Oxy Pdf\\src\\config\\tool-content';
 const languages = ['ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'vi', 'ar']; // We check non-en, non-zh languages. zh and zh-tw are usually complete.
 
 function extractToolIds(filePath) {
@@ -35,7 +35,7 @@ languages.forEach(lang => {
   missingContent[lang] = missing;
 });
 
-fs.writeFileSync('d:\\NextProject\\pdfcraft\\scratch\\missing-tool-contents.json', JSON.stringify(missingContent, null, 2), 'utf8');
+fs.writeFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\missing-tool-contents.json', JSON.stringify(missingContent, null, 2), 'utf8');
 console.log("Saved missing tool contents report to scratch/missing-tool-contents.json");
 
 // Output summary

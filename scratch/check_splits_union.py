@@ -1,7 +1,7 @@
 import json
 import os
 
-scratch_dir = r"d:\NextProject\pdfcraft\scratch"
+scratch_dir = r"d:\NextProject\Oxy Pdf\scratch"
 pending_path = os.path.join(scratch_dir, "pending-messages-chunk3.json")
 with open(pending_path, "r", encoding="utf-8") as f:
     pending_data = json.load(f)

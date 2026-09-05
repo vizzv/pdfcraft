@@ -63,7 +63,7 @@ export class DeepSanitizeProcessor extends BasePDFProcessor {
       // 1. Sanitizing metadata and document properties
       if (sanitizeOptions.stripMetadata) {
         const catalog = pdfDoc.catalog;
-        
+
         // Remove XMP Metadata
         if (catalog.has(pdfLib.PDFName.of('Metadata'))) {
           catalog.delete(pdfLib.PDFName.of('Metadata'));
@@ -78,7 +78,7 @@ export class DeepSanitizeProcessor extends BasePDFProcessor {
           infoDict.set(pdfLib.PDFName.of('Subject'), pdfLib.PDFString.of(''));
           infoDict.set(pdfLib.PDFName.of('Keywords'), pdfLib.PDFString.of(''));
           infoDict.set(pdfLib.PDFName.of('Creator'), pdfLib.PDFString.of(''));
-          infoDict.set(pdfLib.PDFName.of('Producer'), pdfLib.PDFString.of('PDFCraft Sanitizer'));
+          infoDict.set(pdfLib.PDFName.of('Producer'), pdfLib.PDFString.of('Oxy Pdf Sanitizer'));
           infoDict.set(pdfLib.PDFName.of('CreationDate'), pdfLib.PDFString.of('D:19700101000000Z'));
           infoDict.set(pdfLib.PDFName.of('ModDate'), pdfLib.PDFString.of('D:19700101000000Z'));
           findings.push('Standard Document Info fields (Title, Author, Creation Date)');
@@ -92,7 +92,7 @@ export class DeepSanitizeProcessor extends BasePDFProcessor {
           catalog.delete(pdfLib.PDFName.of('PieceInfo'));
           findings.push('PieceInfo cache (contains proprietary editor histories)');
         }
-        
+
         // Remove structural map tree
         if (catalog.has(pdfLib.PDFName.of('StructTreeRoot'))) {
           catalog.delete(pdfLib.PDFName.of('StructTreeRoot'));
@@ -118,7 +118,7 @@ export class DeepSanitizeProcessor extends BasePDFProcessor {
         }
 
         const page = pdfDoc.getPage(i);
-        
+
         // Remove OCGs from individual page resource dictionary
         const resources = page.node.get(pdfLib.PDFName.of('Resources')) as any;
         if (resources && resources.has && resources.has(pdfLib.PDFName.of('Properties'))) {
@@ -139,7 +139,7 @@ export class DeepSanitizeProcessor extends BasePDFProcessor {
       findings.push('Incremental revision history logs (forces full xref reconstruction)');
 
       this.updateProgress(85, 'Rebuilding cross-reference table and rewriting PDF...');
-      
+
       // Save with useObjectStreams to force full object restructuring, leaving no trace of incremental history.
       const pdfBytes = await pdfDoc.save({ useObjectStreams: true });
       const outputBlob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });

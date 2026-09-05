@@ -2,15 +2,15 @@
  * Site configuration
  */
 export const siteConfig = {
-  name: 'PDFCraft',
+  name: 'Oxy Pdf',
   description: 'Professional PDF Tools - Free, Private & Browser-Based. Merge, split, compress, convert, and edit PDF files online without uploading to servers.',
-  url: 'https://pdfcraft.devtoolcafe.com',
+  url: 'https://Oxy Pdf.devtoolcafe.com',
   ogImage: '/images/og-image.png',
   links: {
-    github: 'https://github.com/PDFCraftTool/pdfcraft',
-    twitter: 'https://twitter.com/pdfcraft',
+    github: 'https://github.com/Oxy PdfTool/Oxy Pdf',
+    twitter: 'https://twitter.com/Oxy Pdf',
   },
-  creator: 'PDFCraft Team',
+  creator: 'Oxy Pdf Team',
   keywords: [
     'PDF tools',
     'PDF editor',
@@ -25,9 +25,9 @@ export const siteConfig = {
   ],
   // SEO-related settings
   seo: {
-    titleTemplate: '%s | PDFCraft',
-    defaultTitle: 'PDFCraft - Professional PDF Tools',
-    twitterHandle: '@pdfcraft',
+    titleTemplate: '%s | Oxy Pdf',
+    defaultTitle: 'Oxy Pdf - Professional PDF Tools',
+    twitterHandle: '@Oxy Pdf',
     locale: 'en_US',
   },
 };

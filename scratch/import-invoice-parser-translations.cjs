@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const languages = ['zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 const invoiceDict = {
@@ -267,19 +267,19 @@ console.log("=== INJECTING GLOBAL INVOICE PARSER TRANSLATIONS ===");
 languages.forEach(lang => {
   const langPath = path.join(MESSAGES_DIR, `${lang}.json`);
   if (!fs.existsSync(langPath)) return;
-  
+
   const langData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
-  
+
   if (!langData.common) langData.common = {};
   if (!langData.common.globalInvoiceParser) langData.common.globalInvoiceParser = {};
-  
+
   let count = 0;
   Object.entries(invoiceDict).forEach(([subKey, translations]) => {
     const val = translations[lang] || translations['en'];
     langData.common.globalInvoiceParser[subKey] = val;
     count++;
   });
-  
+
   fs.writeFileSync(langPath, JSON.stringify(langData, null, 2), 'utf8');
   console.log(`Language [${lang}]: Injected ${count} keys for globalInvoiceParser.`);
 });

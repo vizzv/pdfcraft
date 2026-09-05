@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const report = JSON.parse(fs.readFileSync('d:\\NextProject\\pdfcraft\\scratch\\untranslated-messages-report.json', 'utf8'));
+const report = JSON.parse(fs.readFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\untranslated-messages-report.json', 'utf8'));
 
 const prefixCount = {};
 

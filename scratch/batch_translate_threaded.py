@@ -10,9 +10,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-INPUT_FILE = "d:/NextProject/pdfcraft/scratch/pending-messages-chunk3.json"
-OUTPUT_FILE = "d:/NextProject/pdfcraft/scratch/translated-messages-chunk3-partB.json"
-CACHE_FILE = "d:/NextProject/pdfcraft/scratch/translation_cache.json"
+INPUT_FILE = "d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk3.json"
+OUTPUT_FILE = "d:/NextProject/Oxy Pdf/scratch/translated-messages-chunk3-partB.json"
+CACHE_FILE = "d:/NextProject/Oxy Pdf/scratch/translation_cache.json"
 
 TARGET_LANGS = ["es", "fr", "pt", "it"]
 MAX_WORKERS = 10  # 10 parallel threads for rapid translation

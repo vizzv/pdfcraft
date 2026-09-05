@@ -150,15 +150,15 @@ export class CertCryptorProcessor extends BasePDFProcessor {
         color: baseColor,
       });
 
-      // Draw Central Stamp Symbol (e.g. Shield + Key / PDFCraft Logo)
+      // Draw Central Stamp Symbol (e.g. Shield + Key / Oxy Pdf Logo)
       // We will draw a crest with lines
       // Draw a crown/crest in the center
       const iconSize = radius * 0.35;
-      
+
       // Shield outlines
       page.drawRectangle({
-        x: sealX - iconSize/2,
-        y: sealY - iconSize/2,
+        x: sealX - iconSize / 2,
+        y: sealY - iconSize / 2,
         width: iconSize,
         height: iconSize * 0.9,
         borderColor: highlightColor,
@@ -167,22 +167,22 @@ export class CertCryptorProcessor extends BasePDFProcessor {
 
       // Shield cross
       page.drawLine({
-        start: { x: sealX, y: sealY - iconSize/2 },
-        end: { x: sealX, y: sealY + iconSize/2 },
+        start: { x: sealX, y: sealY - iconSize / 2 },
+        end: { x: sealX, y: sealY + iconSize / 2 },
         color: highlightColor,
         thickness: 1.0,
       });
       page.drawLine({
-        start: { x: sealX - iconSize/2, y: sealY },
-        end: { x: sealX + iconSize/2, y: sealY },
+        start: { x: sealX - iconSize / 2, y: sealY },
+        end: { x: sealX + iconSize / 2, y: sealY },
         color: highlightColor,
         thickness: 1.0,
       });
 
       // Shield shadow line
       page.drawRectangle({
-        x: sealX - iconSize/2 + 1,
-        y: sealY - iconSize/2 - 1,
+        x: sealX - iconSize / 2 + 1,
+        y: sealY - iconSize / 2 - 1,
         width: iconSize,
         height: iconSize * 0.9,
         borderColor: shadowColor,
@@ -202,7 +202,7 @@ export class CertCryptorProcessor extends BasePDFProcessor {
         Filter: pdfLib.PDFName.of('Adobe.PPKLite'),
         SubFilter: pdfLib.PDFName.of('adbe.pkcs7.detached'),
         Contents: pdfLib.PDFString.of(String.fromCharCode(...placeholderBytes)), // Preallocate
-        Reason: pdfLib.PDFString.of('Signed officially using PDFCraft Wax-Seal cryptor.'),
+        Reason: pdfLib.PDFString.of('Signed officially using Oxy Pdf Wax-Seal cryptor.'),
         M: pdfLib.PDFString.of(`D:${new Date().toISOString().replace(/[-T:]/g, '').split('.')[0]}Z`),
       });
 
@@ -247,8 +247,8 @@ export class CertCryptorProcessor extends BasePDFProcessor {
         // Enforce user password to simulate certificate lockdown
         // This provides standard enterprise encryption
         const ownerPassword = Math.random().toString(36).substring(2, 12);
-        const userPassword = cryptorOptions.pfxPassword || 'pdfcraft';
-        
+        const userPassword = cryptorOptions.pfxPassword || 'Oxy Pdf';
+
         (pdfDoc as any).encrypt({
           userPassword,
           ownerPassword,

@@ -6,9 +6,9 @@ import urllib.request
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-SOURCE_FILE = r"d:/NextProject/pdfcraft/scratch/pending-messages-chunk2.json"
-CACHE_FILE = r"d:/NextProject/pdfcraft/scratch/translation_cache.json"
-OUTPUT_FILE = r"d:/NextProject/pdfcraft/scratch/translated-messages-chunk2-partB.json"
+SOURCE_FILE = r"d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk2.json"
+CACHE_FILE = r"d:/NextProject/Oxy Pdf/scratch/translation_cache.json"
+OUTPUT_FILE = r"d:/NextProject/Oxy Pdf/scratch/translated-messages-chunk2-partB.json"
 
 TARGET_LANGS = ["es", "fr", "pt", "it"]
 

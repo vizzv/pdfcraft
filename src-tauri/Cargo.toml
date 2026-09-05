@@ -1,8 +1,8 @@
 [package]
-name = "pdfcraft"
+name = "Oxy Pdf"
 version = "0.1.0"
-description = "PDFCraft Desktop Application"
-authors = ["PDFCraft"]
+description = "Oxy Pdf Desktop Application"
+authors = ["Oxy Pdf"]
 edition = "2021"
 
 [build-dependencies]

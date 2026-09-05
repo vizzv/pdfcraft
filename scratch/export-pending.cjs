@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
-const SCRATCH_DIR = 'd:\\NextProject\\pdfcraft\\scratch';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
+const SCRATCH_DIR = 'd:\\NextProject\\Oxy Pdf\\scratch';
 const languages = ['en', 'zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 function getKeys(obj, prefix = '') {
@@ -23,22 +23,22 @@ function shouldTranslate(val, key) {
   if (typeof val !== 'string') return false;
   // 如果不包含英文字母，不需要翻译
   if (!/[a-zA-Z]/.test(val)) return false;
-  
+
   // 排除一些特定的纯技术缩写或数字加单位等
   const techTerms = [
-    'pdf', 'dpi', 'cad', 'rgb', 'sha-256', 'sha256', 'tsa', 'rfc 3161', 
-    'pdf/a', 'url', 'html', 'css', 'js', 'json', 'xml', 'csv', 'svg', 
-    'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff', 'epub', 'mobi', 'docx', 
+    'pdf', 'dpi', 'cad', 'rgb', 'sha-256', 'sha256', 'tsa', 'rfc 3161',
+    'pdf/a', 'url', 'html', 'css', 'js', 'json', 'xml', 'csv', 'svg',
+    'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff', 'epub', 'mobi', 'docx',
     'xlsx', 'pptx', 'txt', 'rtf', 'zip', 'rar', '7z', 'tar', 'gz',
     'b', 'kb', 'mb', 'gb', 'tb'
   ];
-  
+
   const trimmed = val.trim().toLowerCase();
   if (techTerms.includes(trimmed)) return false;
-  
+
   // 排除纯占位符，如 "{value}" 或 "{count}"
   if (/^\{[a-zA-Z0-9_]+\}$/.test(trimmed)) return false;
-  
+
   return true;
 }
 
@@ -55,7 +55,7 @@ const pendingTranslations = {};
 
 languages.forEach(lang => {
   if (lang === 'en') return;
-  
+
   const langPath = path.join(MESSAGES_DIR, `${lang}.json`);
   let langKeys = {};
   if (fs.existsSync(langPath)) {
@@ -66,18 +66,18 @@ languages.forEach(lang => {
       console.error(`Error parsing ${langPath}:`, e.message);
     }
   }
-  
+
   const langKeysSet = new Set(Object.keys(langKeys));
   let countMissing = 0;
   let countFallback = 0;
-  
+
   enKeysSet.forEach(k => {
     const enVal = enKeys[k];
     const hasKey = langKeysSet.has(k);
     const langVal = hasKey ? langKeys[k] : null;
-    
+
     let needsTranslation = false;
-    
+
     if (!hasKey) {
       needsTranslation = shouldTranslate(enVal, k);
       if (needsTranslation) countMissing++;
@@ -88,7 +88,7 @@ languages.forEach(lang => {
         countFallback++;
       }
     }
-    
+
     if (needsTranslation) {
       if (!pendingTranslations[k]) {
         pendingTranslations[k] = {
@@ -98,7 +98,7 @@ languages.forEach(lang => {
       pendingTranslations[k][lang] = ''; // 标记该语言需要翻译这个key
     }
   });
-  
+
   console.log(`Language [${lang}]: Missing requiring translation: ${countMissing}, Fallbacks requiring translation: ${countFallback}`);
 });
 

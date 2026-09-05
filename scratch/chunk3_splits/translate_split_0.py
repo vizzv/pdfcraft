@@ -249,6 +249,6 @@ translations = {
   }
 }
 
-with open("d:/NextProject/pdfcraft/scratch/chunk3_splits/translated_split_0.json", "w", encoding="utf-8") as f:
+with open("d:/NextProject/Oxy Pdf/scratch/chunk3_splits/translated_split_0.json", "w", encoding="utf-8") as f:
     json.dump(translations, f, ensure_ascii=False, indent=2)
 print("Finished writing translated_split_0.json")

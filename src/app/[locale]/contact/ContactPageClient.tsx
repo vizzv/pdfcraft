@@ -33,21 +33,21 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
       title: t('methods.email.title'),
       description: t('methods.email.description'),
       action: t('methods.email.action'),
-      href: 'mailto:contact@pdfcraft.gitu.net',
+      href: 'mailto:contact@Oxy Pdf.gitu.net',
     },
     {
       icon: Github,
       title: t('methods.github.title'),
       description: t('methods.github.description'),
       action: t('methods.github.action'),
-      href: 'https://github.com/PDFCraftTool/pdfcraft',
+      href: 'https://github.com/Oxy PdfTool/Oxy Pdf',
     },
     {
       icon: Twitter,
       title: t('methods.twitter.title'),
       description: t('methods.twitter.description'),
       action: t('methods.twitter.action'),
-      href: 'https://x.com/PDFCraftTool',
+      href: 'https://x.com/Oxy PdfTool',
     },
   ];
 
@@ -74,7 +74,7 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-[hsl(var(--color-muted)/0.3)] py-12">
+        <section className="bg-[hsl(var(--color-muted)/0.3)] pt-24">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-foreground))] mb-4">
@@ -87,49 +87,11 @@ export default function ContactPageClient({ locale }: ContactPageClientProps) {
           </div>
         </section>
 
-        {/* Contact Methods */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {contactMethods.map((method, index) => {
-                const Icon = method.icon;
-                return (
-                  <a
-                    key={index}
-                    href={method.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <Card className="p-6 h-full text-center" hover>
-                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[hsl(var(--color-primary)/0.1)] mb-4">
-                        <Icon className="h-6 w-6 text-[hsl(var(--color-primary))]" />
-                      </div>
-                      <h3 className="font-semibold text-[hsl(var(--color-foreground))] mb-2">
-                        {method.title}
-                      </h3>
-                      <p className="text-sm text-[hsl(var(--color-muted-foreground))] mb-4">
-                        {method.description}
-                      </p>
-                      <span className="text-sm font-medium text-[hsl(var(--color-primary))]">
-                        {method.action}
-                      </span>
-                    </Card>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
         {/* Contact Form */}
-        <section className="py-12 bg-[hsl(var(--color-muted)/0.3)]">
+        <section className=" bg-[hsl(var(--color-muted)/0.3)]">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
               <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-[hsl(var(--color-foreground))] mb-2">
-                  {t('form.title')}
-                </h2>
                 <p className="text-[hsl(var(--color-muted-foreground))]">
                   {t('form.description')}
                 </p>

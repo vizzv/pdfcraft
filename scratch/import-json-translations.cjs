@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 
 function setDeepValue(obj, keyPath, value) {
   const parts = keyPath.split('.');
@@ -44,20 +44,20 @@ Object.entries(importData).forEach(([lang, translations]) => {
     console.warn(`Target file ${targetPath} does not exist. Skipping...`);
     return;
   }
-  
+
   let targetJson = {};
   try {
     targetJson = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
   } catch (err) {
     console.error(`Error parsing existing JSON for ${lang}:`, err.message);
   }
-  
+
   let mergedCount = 0;
   Object.entries(translations).forEach(([keyPath, val]) => {
     setDeepValue(targetJson, keyPath, val);
     mergedCount++;
   });
-  
+
   // Write back formatted json
   fs.writeFileSync(targetPath, JSON.stringify(targetJson, null, 2), 'utf8');
   console.log(`Language [${lang}]: Successfully imported and merged ${mergedCount} translation keys.`);

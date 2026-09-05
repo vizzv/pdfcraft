@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOOL_CONTENT_DIR = 'd:\\NextProject\\pdfcraft\\src\\config\\tool-content';
+const TOOL_CONTENT_DIR = 'd:\\NextProject\\Oxy Pdf\\src\\config\\tool-content';
 
 const translations = {
   'zh-TW': {
@@ -588,7 +588,7 @@ Object.entries(translations).forEach(([lang, data]) => {
   }
 
   let content = fs.readFileSync(filePath, 'utf8');
-  
+
   // Check if they are already present
   const hasFormLogic = content.includes('form-logic-designer');
   const hasInvoice = content.includes('global-invoice-parser');
@@ -615,7 +615,7 @@ Object.entries(translations).forEach(([lang, data]) => {
   }
 
   const updatedContent = content.slice(0, lastBraceIndex) + injectString + content.slice(lastBraceIndex);
-  
+
   fs.writeFileSync(filePath, updatedContent, 'utf8');
   console.log(`[${lang}] Successfully injected missing tools: ${!hasFormLogic ? 'form-logic-designer ' : ''}${!hasInvoice ? 'global-invoice-parser' : ''}`);
 });

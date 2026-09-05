@@ -19,7 +19,7 @@ export function PdfSpineBookbinderTool({ className = '' }: PdfSpineBookbinderToo
   const t = useTranslations('common');
   const [pageCount, setPageCount] = useState(100);
   const [paperGsm, setPaperGsm] = useState<80 | 100 | 120 | 150>(80);
-  const [bookTitle, setBookTitle] = useState('PDFCraft Design');
+  const [bookTitle, setBookTitle] = useState('Oxy Pdf Design');
 
   const [status, setStatus] = useState<ProcessingStatus>('idle');
   const [progress, setProgress] = useState(0);
@@ -109,8 +109,8 @@ export function PdfSpineBookbinderTool({ className = '' }: PdfSpineBookbinderToo
     <div className={`space-y-6 ${className}`.trim()}>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8 space-y-4">
-          <Card 
-            variant="outlined" 
+          <Card
+            variant="outlined"
             className="p-6 bg-zinc-50 dark:bg-zinc-950/40 relative overflow-hidden rounded-[2rem] min-h-[400px] flex flex-col justify-between border-2 border-dashed border-zinc-200 dark:border-zinc-800 select-none"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -129,9 +129,9 @@ export function PdfSpineBookbinderTool({ className = '' }: PdfSpineBookbinderToo
 
             {/* 3D rotate book viewport */}
             <div className="flex-1 flex items-center justify-center p-6 perspective-[1000px]">
-              <div 
+              <div
                 className="w-40 h-56 relative transform-style-3d transition-transform duration-100 ease-out"
-                style={{ 
+                style={{
                   transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
                 }}
               >
@@ -143,9 +143,9 @@ export function PdfSpineBookbinderTool({ className = '' }: PdfSpineBookbinderToo
                 </div>
 
                 {/* Spine side */}
-                <div 
+                <div
                   className="absolute h-52 bg-primary border-t border-b border-primary-hover flex items-center justify-center text-white text-[9px] font-bold overflow-hidden"
-                  style={{ 
+                  style={{
                     width: `${Math.max(4, spineWidthMm * 2)}px`,
                     transform: `rotateY(90deg) translateZ(18px) translateX(-${Math.max(2, spineWidthMm)}px)`,
                     boxShadow: '0 0 10px rgba(var(--primary), 0.5)'

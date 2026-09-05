@@ -8,9 +8,9 @@ import time
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-INPUT_FILE = "d:/NextProject/pdfcraft/scratch/pending-messages-chunk4.json"
-OUTPUT_FILE = "d:/NextProject/pdfcraft/scratch/translated-messages-chunk4-partA.json"
-CACHE_FILE = "d:/NextProject/pdfcraft/scratch/translation_cache.json"
+INPUT_FILE = "d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk4.json"
+OUTPUT_FILE = "d:/NextProject/Oxy Pdf/scratch/translated-messages-chunk4-partA.json"
+CACHE_FILE = "d:/NextProject/Oxy Pdf/scratch/translation_cache.json"
 
 TARGET_LANGS = ["ja", "ko", "de"]
 

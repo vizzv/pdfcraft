@@ -1,6 +1,6 @@
 import json
 
-file_path = "d:/NextProject/pdfcraft/scratch/pending-messages-chunk3.json"
+file_path = "d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk3.json"
 with open(file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const scanReportPath = 'd:\\NextProject\\pdfcraft\\scratch\\chinese-scan-report.json';
-const mappingPath = 'd:\\NextProject\\pdfcraft\\scratch\\mapping.json';
+const scanReportPath = 'd:\\NextProject\\Oxy Pdf\\scratch\\chinese-scan-report.json';
+const mappingPath = 'd:\\NextProject\\Oxy Pdf\\scratch\\mapping.json';
 
 const report = JSON.parse(fs.readFileSync(scanReportPath, 'utf8'));
 const mapping = JSON.parse(fs.readFileSync(mappingPath, 'utf8'));
@@ -98,15 +98,15 @@ report.results.forEach(res => {
   res.matches.forEach(match => {
     const rawContent = match.content;
     const origLineNum = match.lineNum;
-    
+
     // Find the actual line in file, as line numbers might have shifted
     let actualLineIdx = -1;
-    
+
     // Check original line first, then look nearby
     const searchRange = 20; // look within 20 lines
     const startSearch = Math.max(0, origLineNum - 1 - searchRange);
     const endSearch = Math.min(lines.length - 1, origLineNum - 1 + searchRange);
-    
+
     for (let i = origLineNum - 1; i >= startSearch; i--) {
       if (lines[i] && lines[i].includes(rawContent)) {
         actualLineIdx = i;
@@ -146,10 +146,10 @@ report.results.forEach(res => {
 
     // Find the Chinese text to replace inside this line
     const chineseRegex = /[\u4e00-\u9fa5\uff0c\uff1a\uff08\uff09\u3002\uff01\u201c\u201d\u3001a-zA-Z0-9\s\(\)\/\-\.\:\,\&\|\\\+]*[\u4e00-\u9fa5]+[\u4e00-\u9fa5\uff0c\uff1a\uff08\uff09\u3002\uff01\u201c\u201d\u3001a-zA-Z0-9\s\(\)\/\-\.\:\,\&\|\\\+]*/; // match Chinese + surroundings if it forms a text block
-    
+
     // We will extract the exact Chinese string from the report and match it
     const matchChinese = rawContent.replace(/^[a-zA-Z0-9_]+=/, '').replace(/^['"`]/, '').replace(/['"`]$/, '').replace(/^[{}'"`\s\+]+/, '').replace(/[{}'"`\s\+]+$/, '').trim();
-    
+
     // Find the matching key in mapping.json
     let keyInfo = mapping[matchChinese];
     if (!keyInfo) {
@@ -170,13 +170,13 @@ report.results.forEach(res => {
 
     if (keyInfo) {
       const fullKey = `${keyInfo.tool}.${keyInfo.key}`;
-      
+
       // Perform replacement based on the context in the line
       // Case 1: JSX Attribute: attr="Chinese" -> attr={t('fullKey')}
       // Note: we need to handle double quotes, single quotes
       const attrPatternDouble = new RegExp(`(\\b[a-zA-Z0-9_]+)="([^"]*?${escapeRegExp(matchChinese)}[^"]*?)"`);
       const attrPatternSingle = new RegExp(`(\\b[a-zA-Z0-9_]+)='([^']*?${escapeRegExp(matchChinese)}[^']*?)'`);
-      
+
       if (attrPatternDouble.test(line)) {
         line = line.replace(attrPatternDouble, (m, attr, val) => {
           // If the val is exactly the Chinese, replace with {t('fullKey')}
@@ -207,7 +207,7 @@ report.results.forEach(res => {
         const strPatternDouble = new RegExp(`"${escapeRegExp(matchChinese)}"`);
         const strPatternSingle = new RegExp(`'${escapeRegExp(matchChinese)}'`);
         const strPatternBacktick = new RegExp(`\`${escapeRegExp(matchChinese)}\``);
-        
+
         if (strPatternDouble.test(line)) {
           line = line.replace(strPatternDouble, `t('${fullKey}')`);
         } else if (strPatternSingle.test(line)) {
@@ -246,7 +246,7 @@ report.results.forEach(res => {
 
   if (modifiedCount > 0) {
     let newContent = lines.join('\n');
-    
+
     // Inject import useTranslations if needed
     if (needsImport) {
       // Find the last import statement and add next-intl import

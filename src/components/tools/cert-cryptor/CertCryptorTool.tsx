@@ -69,7 +69,7 @@ export function CertCryptorTool() {
     setTimeout(() => {
       setStampState('pressing');
       setProgress(50);
-      
+
       setTimeout(async () => {
         try {
           // Translate UI coordinates (relative to 300x400 preview) back to actual standard A4 PDF coordinates (approx 595x841)
@@ -84,7 +84,7 @@ export function CertCryptorTool() {
               sealPage: 0,
               sealX: pdfX,
               sealY: pdfY,
-              pfxPassword: pfxPassword || 'pdfcraft',
+              pfxPassword: pfxPassword || 'Oxy Pdf',
               encryptWithCert,
             },
             (p) => setProgress(Math.max(50, p))
@@ -175,11 +175,10 @@ export function CertCryptorTool() {
                     <button
                       key={color.id}
                       onClick={() => setWaxColor(color.id as any)}
-                      className={`p-2 text-xs rounded-lg border text-center transition-all ${
-                        waxColor === color.id
+                      className={`p-2 text-xs rounded-lg border text-center transition-all ${waxColor === color.id
                           ? `${color.bg} scale-105 shadow-lg border-opacity-100`
                           : 'border-neutral-800 bg-neutral-900 text-neutral-400 border-opacity-40'
-                      }`}
+                        }`}
                     >
                       {color.label}
                     </button>
@@ -201,7 +200,7 @@ export function CertCryptorTool() {
                     className="w-4 h-4 rounded text-yellow-500 bg-neutral-800 border-neutral-700 focus:ring-yellow-500 accent-yellow-500"
                   />
                 </div>
-                
+
                 {encryptWithCert && (
                   <div className="space-y-2 pt-2 border-t border-neutral-800">
                     <label className="text-[10px] text-neutral-400">{t('certCryptor.decryptPasswordHelp')}</label>
@@ -258,7 +257,7 @@ export function CertCryptorTool() {
                 <span>{t('certCryptor.clickToReposition')}</span>
               </div>
 
-              <div 
+              <div
                 ref={previewRef}
                 onClick={handlePreviewClick}
                 className="relative w-[300px] h-[400px] bg-white rounded-lg mx-auto overflow-hidden shadow-2xl border border-neutral-750 flex flex-col justify-between p-6 select-none"
@@ -278,7 +277,7 @@ export function CertCryptorTool() {
 
                 {/* The 3D Wax Seal Placement / Imprinted Graphic */}
                 {(stampState === 'idle' || stampState === 'stamped') && (
-                  <div 
+                  <div
                     className="absolute pointer-events-none rounded-full flex items-center justify-center transition-all duration-300"
                     style={{
                       left: `${sealPos.x - 30}px`,
@@ -288,12 +287,11 @@ export function CertCryptorTool() {
                     }}
                   >
                     {/* Rendered stamp */}
-                    <div 
-                      className={`w-full h-full rounded-full flex items-center justify-center shadow-lg border-2 ${
-                        waxColor === 'gold' ? 'bg-yellow-600 border-yellow-400 text-yellow-100 shadow-yellow-600/30' :
-                        waxColor === 'red' ? 'bg-red-700 border-red-500 text-red-100 shadow-red-700/30' :
-                        'bg-amber-800 border-amber-600 text-amber-100 shadow-amber-850/30'
-                      }`}
+                    <div
+                      className={`w-full h-full rounded-full flex items-center justify-center shadow-lg border-2 ${waxColor === 'gold' ? 'bg-yellow-600 border-yellow-400 text-yellow-100 shadow-yellow-600/30' :
+                          waxColor === 'red' ? 'bg-red-700 border-red-500 text-red-100 shadow-red-700/30' :
+                            'bg-amber-800 border-amber-600 text-amber-100 shadow-amber-850/30'
+                        }`}
                       style={{
                         transform: stampState === 'stamped' ? 'scale(1)' : 'scale(0.85) rotate(-15deg)',
                         boxShadow: 'inset -3px -3px 8px rgba(0,0,0,0.3), inset 3px 3px 8px rgba(255,255,255,0.4)',
@@ -307,7 +305,7 @@ export function CertCryptorTool() {
 
                 {/* 3D Falling Stamp Animation (WOW FACTOR IN ACTION) */}
                 {(stampState === 'descending' || stampState === 'pressing') && (
-                  <div 
+                  <div
                     className="absolute pointer-events-none z-20 flex items-center justify-center"
                     style={{
                       left: `${sealPos.x - 35}px`,
@@ -319,7 +317,7 @@ export function CertCryptorTool() {
                     }}
                   >
                     {/* Metal handle and base seal */}
-                    <div 
+                    <div
                       className="w-full h-full flex flex-col items-center justify-end"
                       style={{
                         transformStyle: 'preserve-3d',

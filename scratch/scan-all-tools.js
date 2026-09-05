@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const srcDir = 'd:\\NextProject\\pdfcraft\\src\\components\\tools';
+const srcDir = 'd:\\NextProject\\Oxy Pdf\\src\\components\\tools';
 const CHINESE_REGEX = /[\u4e00-\u9fa5]/;
 
 const ignorePaths = [
@@ -20,11 +20,11 @@ const results = [];
 
 function scanDirectory(dir) {
   const files = fs.readdirSync(dir);
-  
+
   files.forEach(file => {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
-    
+
     if (stat.isDirectory()) {
       if (ignorePaths.some(p => new RegExp(p).test(fullPath))) {
         return;
@@ -44,18 +44,18 @@ function scanFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.split('\n');
   const fileMatches = [];
-  
+
   let inMultiLineComment = false;
-  
+
   lines.forEach((line, idx) => {
     let cleanLine = line;
-    
+
     // 简单的单行注释剥离
     if (cleanLine.includes('//')) {
       const parts = cleanLine.split('//');
       cleanLine = parts[0];
     }
-    
+
     // 处理多行注释
     if (inMultiLineComment) {
       if (cleanLine.includes('*/')) {
@@ -65,7 +65,7 @@ function scanFile(filePath) {
         cleanLine = '';
       }
     }
-    
+
     if (cleanLine.includes('/*')) {
       if (cleanLine.includes('*/')) {
         cleanLine = cleanLine.replace(/\/\*[\s\S]*?\*\//g, '');
@@ -74,12 +74,12 @@ function scanFile(filePath) {
         cleanLine = cleanLine.substring(0, cleanLine.indexOf('/*'));
       }
     }
-    
+
     // 剥离 console.log
     if (cleanLine.includes('console.')) {
       cleanLine = '';
     }
-    
+
     // 如果剥离注释后仍然存在中文字符，则记录
     if (CHINESE_REGEX.test(cleanLine)) {
       fileMatches.push({
@@ -88,7 +88,7 @@ function scanFile(filePath) {
       });
     }
   });
-  
+
   if (fileMatches.length > 0) {
     matchFilesCount++;
     totalMatches += fileMatches.length;
@@ -107,7 +107,7 @@ console.log(`发现含有中文的文件数: ${matchFilesCount}`);
 console.log(`总计发现硬编码行数: ${totalMatches}`);
 
 // 写入 JSON 报告文件
-const reportPath = 'd:\\NextProject\\pdfcraft\\scratch\\chinese-scan-report.json';
+const reportPath = 'd:\\NextProject\\Oxy Pdf\\scratch\\chinese-scan-report.json';
 fs.writeFileSync(reportPath, JSON.stringify({
   filesScanned,
   matchFilesCount,

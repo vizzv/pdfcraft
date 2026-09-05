@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const languages = ['zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 // 模型自主生成的 150+ 个高频通用 UI 与 PDF 专业领域多语言大字典
@@ -357,12 +357,12 @@ console.log("=== INJECTING HIGH-FREQUENCY TRANSLATIONS ===");
 
 languages.forEach(lang => {
   if (lang === 'en') return;
-  
+
   const langPath = path.join(MESSAGES_DIR, `${lang}.json`);
   if (!fs.existsSync(langPath)) return;
-  
+
   let langData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
-  
+
   // 递归寻找扁平的 keys，并将对应的 key-value 如果其中文和英文在我们的字典里，就进行回填
   // 这里我们为了方便，直接用扁平化的遍历逻辑
   function getKeys(obj, prefix = '') {
@@ -378,14 +378,14 @@ languages.forEach(lang => {
     }
     return keys;
   }
-  
+
   const flatKeys = getKeys(langData);
   const enPath = path.join(MESSAGES_DIR, 'en.json');
   const enData = JSON.parse(fs.readFileSync(enPath, 'utf8'));
   const enFlat = getKeys(enData);
-  
+
   let updatedCount = 0;
-  
+
   // 递归设置属性
   function setDeepValue(obj, keyPath, value) {
     const parts = keyPath.split('.');
@@ -399,10 +399,10 @@ languages.forEach(lang => {
     }
     current[parts[parts.length - 1]] = value;
   }
-  
+
   Object.entries(flatKeys).forEach(([keyPath, langVal]) => {
     const enVal = enFlat[keyPath];
-    
+
     // 如果该语言的值和英文是一模一样的，且该英文值存在于我们的大翻译字典里
     if (enVal && langVal === enVal && bulkDict[enVal]) {
       const targetTrans = bulkDict[enVal][lang];
@@ -412,7 +412,7 @@ languages.forEach(lang => {
       }
     }
   });
-  
+
   fs.writeFileSync(langPath, JSON.stringify(langData, null, 2), 'utf8');
   console.log(`Language [${lang}]: Translated ${updatedCount} keys using high-frequency dict.`);
 });

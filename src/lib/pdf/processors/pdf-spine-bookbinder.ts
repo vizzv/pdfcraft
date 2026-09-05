@@ -28,7 +28,7 @@ export class PdfSpineBookbinderProcessor extends BasePDFProcessor {
       paperGsm: 80,
       coverWidthPt: 595.27,
       coverHeightPt: 841.89,
-      bookTitle: 'PDFCraft Bound Book',
+      bookTitle: 'Oxy Pdf Bound Book',
       ...(options as Partial<PdfSpineBookbinderOptions>),
     };
 
@@ -43,7 +43,7 @@ export class PdfSpineBookbinderProcessor extends BasePDFProcessor {
 
       const sheetsCount = Math.ceil(bindOptions.pageCount / 2);
       const spineWidthMm = sheetsCount * sheetThicknessMm;
-      
+
       // Convert mm to PostScript points (1 mm = 2.83465 pt)
       const spineWidthPt = spineWidthMm * 2.83465;
 
@@ -95,7 +95,7 @@ export class PdfSpineBookbinderProcessor extends BasePDFProcessor {
         const font = await pdfDoc.embedFont(pdfLib.StandardFonts.HelveticaBold);
         const fontSize = Math.min(spineWidthPt - 4, 12);
         const titleWidth = font.widthOfTextAtSize(bindOptions.bookTitle, fontSize);
-        
+
         // Draw vertical spine text centered vertically
         const textX = foldX1 + (spineWidthPt - fontSize) / 2 + fontSize - 2;
         const textY = (pageHeightPt - titleWidth) / 2;
@@ -115,7 +115,7 @@ export class PdfSpineBookbinderProcessor extends BasePDFProcessor {
       // Embed details text at bottom of spine for binder info
       const detailFont = await pdfDoc.embedFont(pdfLib.StandardFonts.Helvetica);
       const stampText = `Spine: ${spineWidthMm.toFixed(2)}mm (${spineWidthPt.toFixed(1)}pt) | ${bindOptions.pageCount} Pages | ${bindOptions.paperGsm}g GSM`;
-      
+
       page.drawText(stampText, {
         x: 15,
         y: 15,

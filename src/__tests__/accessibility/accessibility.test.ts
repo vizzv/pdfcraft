@@ -78,15 +78,15 @@ describe('Accessibility - Color Contrast (Requirements: 9.3)', () => {
   });
 
   describe('verifyColorContrast', () => {
-    it('should verify all PDFCraft color combinations meet WCAG AA', () => {
+    it('should verify all Oxy Pdf color combinations meet WCAG AA', () => {
       const { passed, results } = verifyColorContrast();
-      
+
       // Log any failures for debugging
       const failures = results.filter(r => !r.passed);
       if (failures.length > 0) {
         console.log('Color contrast failures:', failures);
       }
-      
+
       expect(passed).toBe(true);
     });
 

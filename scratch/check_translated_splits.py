@@ -4,7 +4,7 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-scratch_dir = r"d:\NextProject\pdfcraft\scratch"
+scratch_dir = r"d:\NextProject\Oxy Pdf\scratch"
 splits_dir = os.path.join(scratch_dir, "chunk3_splits")
 
 for i in range(6):

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOOLS_DIR = 'd:\\NextProject\\pdfcraft\\src\\components\\tools';
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const TOOLS_DIR = 'd:\\NextProject\\Oxy Pdf\\src\\components\\tools';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 
 const recentTools = [
   'eink-optimizer',
@@ -54,11 +54,11 @@ const allUsedKeys = new Set();
 recentTools.forEach(tool => {
   const toolDir = path.join(TOOLS_DIR, tool);
   if (!fs.existsSync(toolDir)) return;
-  
+
   const files = getFiles(toolDir);
   files.forEach(file => {
     const content = fs.readFileSync(file, 'utf8');
-    
+
     // 匹配 t('some.key') 或 t("some.key")
     const regex = /t\(\s*['"]([^'"]+)['"]/g;
     let match;
@@ -99,5 +99,5 @@ allUsedKeys.forEach(k => {
 });
 
 console.log(`\nMatched ${keysInfo.length} physical keys in en.json:`);
-fs.writeFileSync('d:\\NextProject\\pdfcraft\\scratch\\recent-tools-keys.json', JSON.stringify(keysInfo, null, 2), 'utf8');
+fs.writeFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\recent-tools-keys.json', JSON.stringify(keysInfo, null, 2), 'utf8');
 console.log(`Saved to scratch/recent-tools-keys.json`);

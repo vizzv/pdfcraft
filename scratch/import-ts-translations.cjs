@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOOL_CONTENT_DIR = 'd:\\NextProject\\pdfcraft\\src\\config\\tool-content';
+const TOOL_CONTENT_DIR = 'd:\\NextProject\\Oxy Pdf\\src\\config\\tool-content';
 
 const langToVar = {
   'en': 'toolContentEn',
@@ -42,9 +42,9 @@ Object.entries(importData).forEach(([lang, toolsData]) => {
     console.warn(`Target file ${filePath} does not exist. Skipping...`);
     return;
   }
-  
+
   const content = fs.readFileSync(filePath, 'utf8');
-  
+
   // Locate the export line to parse the object.
   // Example: export const toolContentJa: Record<string, ToolContent> = {
   const varName = langToVar[lang];
@@ -52,22 +52,22 @@ Object.entries(importData).forEach(([lang, toolsData]) => {
     console.warn(`Unknown variable mapping for language: ${lang}. Skipping...`);
     return;
   }
-  
+
   const startIndex = content.indexOf(`${varName}:`);
   if (startIndex === -1) {
     console.error(`Could not find variable ${varName} inside ${filePath}`);
     return;
   }
-  
+
   // Find the opening brace of the object
   const braceIndex = content.indexOf('{', startIndex);
   if (braceIndex === -1) {
     console.error(`Could not find opening brace for ${varName}`);
     return;
   }
-  
+
   const objectString = content.substring(braceIndex);
-  
+
   // Load en.ts contents to resolve reference variables like toolContentEn
   const enFilePath = path.join(TOOL_CONTENT_DIR, 'en.ts');
   let enContent = {};
@@ -94,19 +94,19 @@ Object.entries(importData).forEach(([lang, toolsData]) => {
     console.error(`Failed to evaluate object structure inside ${lang}.ts:`, err.message);
     return;
   }
-  
+
   // Merge new translations
   let mergeCount = 0;
   Object.entries(toolsData).forEach(([toolId, data]) => {
     currentObj[toolId] = data;
     mergeCount++;
   });
-  
+
   // Reconstruct TS file
   // Keep the imports at the top
   const header = content.substring(0, braceIndex).trim();
   const newContent = `${header} ${JSON.stringify(currentObj, null, 2)};\n`;
-  
+
   fs.writeFileSync(filePath, newContent, 'utf8');
   console.log(`Language [${lang}]: Successfully merged ${mergeCount} tools metadata into ${filePath}`);
 });

@@ -112,10 +112,10 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       }
 
       this.updateProgress(30, 'Preparing trusted signature fields...');
-      
+
       const tsaName = timestampOptions.tsaServer || 'MeSign';
       const timestampDate = new Date();
-      
+
       // 1. Generate keys & certificate for our virtual TSA on the fly using node-forge
       // This guarantees legal math proof and runs 100% locally avoiding CORS TSA cross-origin blocks
       const keys = forge.pki.rsa.generateKeyPair(2048);
@@ -125,17 +125,17 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       cert.validity.notBefore = new Date();
       cert.validity.notAfter = new Date();
       cert.validity.notAfter.setFullYear(cert.validity.notBefore.getFullYear() + 10);
-      
+
       const attrs = [{
         name: 'commonName',
-        value: `PDFCraft Trusted TSA Authority (${tsaName})`
+        value: `Oxy Pdf Trusted TSA Authority (${tsaName})`
       }, {
         name: 'organizationName',
-        value: 'PDFCraft Secure Group'
+        value: 'Oxy Pdf Secure Group'
       }];
       cert.setSubject(attrs);
       cert.setIssuer(attrs);
-      
+
       // Extensions for digital signature and timestamping
       cert.setExtensions([{
         name: 'basicConstraints',
@@ -149,7 +149,7 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
         name: 'extKeyUsage',
         timeStamping: true
       }]);
-      
+
       cert.sign(keys.privateKey, forge.md.sha256.create());
 
       // 2. Pre-allocate signature dictionary inside the PDF context
@@ -165,7 +165,7 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       });
 
       const sigRef = pdfDoc.context.register(signatureDict);
-      
+
       // Add signature to catalog /InteractiveForm
       let acroForm = pdfDoc.catalog.get(pdfLib.PDFName.of('AcroForm')) as any;
       if (!acroForm) {
@@ -188,14 +188,14 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       this.updateProgress(60, 'Hashing PDF structure...');
       // 3. Save PDF with pre-allocated Sig placeholder
       const tempPdfBytes = await pdfDoc.save({ useObjectStreams: false });
-      
+
       // 4. Compute correct byte ranges & sign hash using PKCS#7 DETACHED
       const hexContentsPlaceholder = '0'.repeat(8192);
-      
+
       // Highly optimized native bytes matching to avoid call stack limits (0 string copy overhead)
       const placeholderPattern = new Uint8Array(8192).fill(48); // 48 is ASCII for '0'
       const placeholderOffset = findBytesPattern(tempPdfBytes, placeholderPattern);
-      
+
       if (placeholderOffset === -1) {
         throw new Error('Pre-allocated contents slot not found in PDF bytes');
       }
@@ -209,7 +209,7 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       // Extract the signature-excluded PDF data for hashing
       const dataToSign1 = tempPdfBytes.subarray(range1Start, range1Length);
       const dataToSign2 = tempPdfBytes.subarray(range2Start, range2Start + range2Length);
-      
+
       // Combine buffer slices using recursion-safe binary encoding chunks
       const hashBuffer = forge.md.sha256.create();
       hashBuffer.update(safeBinaryEncode(dataToSign1));
@@ -244,7 +244,7 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
 
       // Sign the PKCS#7 package
       p7.sign();
-      
+
       // Convert ASN.1 PKCS#7 package to DER hex bytes
       const derBytes = forge.asn1.toDer(p7.toAsn1()).getBytes();
       let signatureHex = forge.util.bytesToHex(derBytes);
@@ -256,11 +256,11 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       signatureHex = signatureHex.padEnd(8192, '0');
 
       this.updateProgress(90, 'Assembling finalized PDF...');
-      
+
       // Inject back the correct ByteRange and hex Contents into the PDF bytes
       const finalPdfBytes = new Uint8Array(tempPdfBytes.length);
       finalPdfBytes.set(tempPdfBytes);
-      
+
       // Write signature hex bytes into contents placeholder
       for (let i = 0; i < 8192; i++) {
         finalPdfBytes[placeholderOffset + i] = signatureHex.charCodeAt(i);
@@ -269,13 +269,13 @@ export class TimestampPDFProcessor extends BasePDFProcessor {
       // Locate ByteRange in the temp PDF bytes and patch it
       const rangeString = `[${range1Start} ${range1Length} ${range2Start} ${range2Length}]`;
       const byteRangePlaceholder = '/ByteRange [0 0 0 0]';
-      
+
       const byteRangePattern = new Uint8Array(byteRangePlaceholder.length);
       for (let i = 0; i < byteRangePlaceholder.length; i++) {
         byteRangePattern[i] = byteRangePlaceholder.charCodeAt(i);
       }
       const rangeOffset = findBytesPattern(tempPdfBytes, byteRangePattern);
-      
+
       if (rangeOffset !== -1) {
         const paddedRangeString = `/ByteRange ${rangeString}`.padEnd(byteRangePlaceholder.length, ' ');
         for (let i = 0; i < byteRangePlaceholder.length; i++) {

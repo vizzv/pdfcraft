@@ -7,7 +7,7 @@ import type { WorkflowExecutionRecord, WorkflowHistoryStorage } from '@/types/wo
 import type { WorkflowNode, WorkflowEdge } from '@/types/workflow';
 import { logger } from '@/lib/utils/logger';
 
-const STORAGE_KEY = 'pdfcraft_workflow_history';
+const STORAGE_KEY = 'Oxy Pdf_workflow_history';
 const MAX_RECORDS = 50; // Keep last 50 executions
 
 /**
@@ -19,7 +19,7 @@ export function loadExecutionHistory(): WorkflowExecutionRecord[] {
         if (!stored) return [];
 
         const storage: WorkflowHistoryStorage = JSON.parse(stored);
-        
+
         // Convert date strings back to Date objects
         return storage.records.map(record => ({
             ...record,
@@ -39,7 +39,7 @@ function saveExecutionHistory(records: WorkflowExecutionRecord[]): void {
     try {
         // Keep only the most recent records
         const limitedRecords = records.slice(-MAX_RECORDS);
-        
+
         const storage: WorkflowHistoryStorage = {
             records: limitedRecords,
             maxRecords: MAX_RECORDS,
@@ -103,7 +103,7 @@ export function updateExecutionRecord(
 ): void {
     const history = loadExecutionHistory();
     const index = history.findIndex(r => r.id === id);
-    
+
     if (index !== -1) {
         history[index] = { ...history[index], ...updates };
         saveExecutionHistory(history);
@@ -122,7 +122,7 @@ export function completeExecutionRecord(
 ): void {
     const history = loadExecutionHistory();
     const index = history.findIndex(r => r.id === id);
-    
+
     if (index !== -1) {
         const record = history[index];
         const endTime = new Date();
@@ -167,12 +167,12 @@ export function clearExecutionHistory(): void {
  */
 export function getExecutionStatistics() {
     const history = loadExecutionHistory();
-    
+
     const total = history.length;
     const completed = history.filter(r => r.status === 'completed').length;
     const failed = history.filter(r => r.status === 'failed').length;
     const cancelled = history.filter(r => r.status === 'cancelled').length;
-    
+
     const completedRecords = history.filter(r => r.status === 'completed' && r.duration);
     const avgDuration = completedRecords.length > 0
         ? completedRecords.reduce((sum, r) => sum + (r.duration || 0), 0) / completedRecords.length

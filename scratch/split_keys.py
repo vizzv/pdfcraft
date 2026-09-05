@@ -1,8 +1,8 @@
 import json
 import os
 
-input_path = r"d:\NextProject\pdfcraft\scratch\pending-messages-chunk1.json"
-parts_dir = r"d:\NextProject\pdfcraft\scratch\parts"
+input_path = r"d:\NextProject\Oxy Pdf\scratch\pending-messages-chunk1.json"
+parts_dir = r"d:\NextProject\Oxy Pdf\scratch\parts"
 os.makedirs(parts_dir, exist_ok=True)
 
 with open(input_path, 'r', encoding='utf-8') as f:

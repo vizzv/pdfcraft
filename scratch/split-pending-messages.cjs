@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const data = JSON.parse(fs.readFileSync('d:\\NextProject\\pdfcraft\\scratch\\pending-translations-map.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\pending-translations-map.json', 'utf8'));
 const entries = Object.entries(data);
 
 console.log(`Total messages keys to translate: ${entries.length}`);
@@ -18,7 +18,7 @@ for (let i = 0; i < entries.length; i += CHUNK_SIZE) {
 }
 
 chunks.forEach((chunk, idx) => {
-  const outPath = `d:\\NextProject\\pdfcraft\\scratch\\pending-messages-chunk${idx + 1}.json`;
+  const outPath = `d:\\NextProject\\Oxy Pdf\\scratch\\pending-messages-chunk${idx + 1}.json`;
   fs.writeFileSync(outPath, JSON.stringify(chunk, null, 2), 'utf8');
   console.log(`Saved chunk ${idx + 1} with ${Object.keys(chunk).length} keys to ${outPath}`);
 });

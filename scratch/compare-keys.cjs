@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const languages = ['en', 'zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 function getKeys(obj, prefix = '') {
@@ -34,14 +34,14 @@ languages.forEach(lang => {
     console.log(`Missing file for ${lang}`);
     return;
   }
-  
+
   const langData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
   const langKeys = getKeys(langData);
   const langKeysSet = new Set(Object.keys(langKeys));
-  
+
   let missing = [];
   let matchingEnglishFallback = [];
-  
+
   enKeysSet.forEach(k => {
     if (!langKeysSet.has(k)) {
       missing.push(k);
@@ -50,7 +50,7 @@ languages.forEach(lang => {
       matchingEnglishFallback.push(k);
     }
   });
-  
+
   console.log(`Language [${lang}]:`);
   console.log(`  - Total keys: ${langKeysSet.size}`);
   console.log(`  - Missing keys: ${missing.length}`);

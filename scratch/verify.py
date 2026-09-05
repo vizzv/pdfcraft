@@ -1,8 +1,8 @@
 import json
 import re
 
-SOURCE_FILE = r"d:/NextProject/pdfcraft/scratch/pending-messages-chunk2.json"
-OUTPUT_FILE = r"d:/NextProject/pdfcraft/scratch/translated-messages-chunk2-partB.json"
+SOURCE_FILE = r"d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk2.json"
+OUTPUT_FILE = r"d:/NextProject/Oxy Pdf/scratch/translated-messages-chunk2-partB.json"
 LANGS = ["es", "fr", "pt", "it"]
 
 with open(SOURCE_FILE, "r", encoding="utf-8") as f:

@@ -1,6 +1,6 @@
 import json
 
-with open("d:/NextProject/pdfcraft/scratch/pending-messages-chunk2.json", "r", encoding="utf-8") as f:
+with open("d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk2.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 total_chars = 0

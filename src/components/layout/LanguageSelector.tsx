@@ -12,7 +12,7 @@ export interface LanguageSelectorProps {
 }
 
 // Storage key for language preference
-const LANGUAGE_PREFERENCE_KEY = 'pdfcraft-language-preference';
+const LANGUAGE_PREFERENCE_KEY = 'Oxy Pdf-language-preference';
 
 /**
  * Save language preference to localStorage
@@ -107,11 +107,11 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ currentLocal
   const handleLanguageSelect = useCallback((locale: Locale) => {
     // Save preference to localStorage
     saveLanguagePreference(locale);
-    
+
     // Navigate to the new locale path
     const newPath = getLocalizedPath(pathname, locale);
     router.push(newPath);
-    
+
     setIsOpen(false);
     setFocusedIndex(-1);
   }, [pathname, router]);
@@ -161,12 +161,12 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ currentLocal
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         aria-label={t('selectLanguage')}
-        className="flex items-center gap-1.5"
+        className="flex items-center justify-center gap-1.5 text-[hsl(var(--color-muted-foreground))]"
       >
-        <Globe className="h-4 w-4" aria-hidden="true" />
-        <span className="hidden sm:inline text-sm">{currentConfig.nativeName}</span>
-        <ChevronDown 
-          className={`h-3 w-3 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        <Globe className="w-4 h-4" aria-hidden="true" />
+        <span className="hidden sm:inline text-sm flex-shrink-0">{currentConfig.nativeName}</span>
+        <ChevronDown
+          className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           aria-hidden="true"
         />
       </Button>
@@ -193,8 +193,8 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ currentLocal
                 className={`
                   flex items-center justify-between w-full px-3 py-2 text-sm text-left
                   transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[hsl(var(--color-ring))]
-                  ${isSelected 
-                    ? 'bg-[hsl(var(--color-primary)/0.1)] text-[hsl(var(--color-primary))]' 
+                  ${isSelected
+                    ? 'bg-[hsl(var(--color-primary)/0.1)] text-[hsl(var(--color-primary))]'
                     : 'text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))] focus:bg-[hsl(var(--color-muted))]'
                   }
                 `}

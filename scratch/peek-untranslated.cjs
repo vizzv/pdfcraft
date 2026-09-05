@@ -1,5 +1,5 @@
 const fs = require('fs');
-const list = JSON.parse(fs.readFileSync('d:\\NextProject\\pdfcraft\\scratch\\untranslated-tools-pairs.json', 'utf8'));
+const list = JSON.parse(fs.readFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\untranslated-tools-pairs.json', 'utf8'));
 
 console.log("Total entries in untranslated-tools-pairs:", list.length);
 console.log("Peeking first 15 entries:");

@@ -26,7 +26,7 @@ export interface BatchBarcodeOptions {
 
 const DEFAULT_OPTIONS: BatchBarcodeOptions = {
   barcodeType: 'qr',
-  value: 'https://pdfcraft.org',
+  value: 'https://Oxy Pdf.org',
   x: 50,
   y: 50,
   width: 80,
@@ -60,14 +60,14 @@ export class BatchBarcodeInjectorProcessor extends BasePDFProcessor {
     try {
       this.updateProgress(10, 'Loading PDF document...');
       const pdfLib = await loadPdfLib();
-      
+
       const fileBytes = await file.arrayBuffer();
       const pdfDoc = await pdfLib.PDFDocument.load(fileBytes);
       const pages = pdfDoc.getPages();
       const totalPages = pages.length;
 
       this.updateProgress(30, 'Generating asset barcodes...');
-      
+
       // We embed the barcode. If barcodeImages base64 array is provided, we use it.
       // Otherwise, we draw a premium fallback QR/Barcode visual placeholder on canvas.
       let imageBuffer: Uint8Array;
@@ -113,7 +113,7 @@ export class BatchBarcodeInjectorProcessor extends BasePDFProcessor {
             }
           }
         }
-        
+
         const dataUrl = canvas.toDataURL('image/png');
         const base64 = dataUrl.split(',').pop() || '';
         imageBuffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
@@ -140,7 +140,7 @@ export class BatchBarcodeInjectorProcessor extends BasePDFProcessor {
         const pageIdx = targetPages[idx];
         this.updateProgress(60 + idx * progressInterval, `Injecting into page ${pageIdx + 1}...`);
         const page = pages[pageIdx];
-        
+
         // Draw the barcode image
         page.drawImage(embeddedBarcode, {
           x: barcodeOptions.x,

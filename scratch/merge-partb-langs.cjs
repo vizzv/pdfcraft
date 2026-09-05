@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const dir = 'd:/NextProject/pdfcraft/scratch';
+const dir = 'd:/NextProject/Oxy Pdf/scratch';
 const languages = ['es', 'fr', 'pt', 'it'];
 const merged = {};
 

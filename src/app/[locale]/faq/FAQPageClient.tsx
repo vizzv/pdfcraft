@@ -101,7 +101,7 @@ export default function FAQPageClient({ locale }: FAQPageClientProps) {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-[hsl(var(--color-muted)/0.3)] pt-20 pb-12">
+        <section className="bg-[hsl(var(--color-muted)/0.3)] pb-12 pt-24">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-3xl md:text-4xl font-bold text-[hsl(var(--color-foreground))] mb-4">

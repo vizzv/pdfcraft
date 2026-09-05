@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
-const SCRATCH_DIR = 'd:\\NextProject\\pdfcraft\\scratch';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
+const SCRATCH_DIR = 'd:\\NextProject\\Oxy Pdf\\scratch';
 const languages = ['zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 // 获取嵌套对象的所有叶子节点
@@ -16,7 +16,7 @@ function getKeys(obj, prefix = '') {
       // 如果所有的 key 都是数字，说明可能是个被拆分的字符串
       const keysOfVal = Object.keys(val);
       const isSplitString = keysOfVal.length > 0 && keysOfVal.every(k => !isNaN(Number(k)));
-      
+
       if (isSplitString) {
         // 尝试恢复它
         try {
@@ -75,7 +75,7 @@ languages.forEach(lang => {
     fs.writeFileSync(langPath, JSON.stringify(enData, null, 2), 'utf8');
     return;
   }
-  
+
   let rawData;
   try {
     rawData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
@@ -83,19 +83,19 @@ languages.forEach(lang => {
     console.error(`[${lang}] Failed to parse JSON: ${e.message}. Using template...`);
     rawData = {};
   }
-  
+
   const parsedKeys = getKeys(rawData);
   const normalizedFlat = {};
-  
+
   let recoveredCount = 0;
   let missingCount = 0;
   let redundantCount = 0;
-  
+
   // 以 en.json 的 keys 为准进行重构
   enKeysSet.forEach(k => {
     const enVal = enKeys[k];
     const rawVal = parsedKeys[k];
-    
+
     if (rawVal === undefined) {
       // 缺失值，填补英文 fallback
       normalizedFlat[k] = enVal;
@@ -119,19 +119,19 @@ languages.forEach(lang => {
       normalizedFlat[k] = rawVal;
     }
   });
-  
+
   // 检查冗余 key
   Object.keys(parsedKeys).forEach(k => {
     if (!enKeysSet.has(k)) {
       redundantCount++;
     }
   });
-  
+
   // 还原为嵌套对象并保存
   const nestedResult = unflatten(normalizedFlat);
-  
+
   fs.writeFileSync(langPath, JSON.stringify(nestedResult, null, 2), 'utf8');
-  
+
   console.log(`[${lang}] Normalized successfully:`);
   console.log(`  - Recovered character-split keys: ${recoveredCount}`);
   console.log(`  - Missing (filled with English fallback): ${missingCount}`);

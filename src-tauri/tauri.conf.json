@@ -1,7 +1,7 @@
 {
-  "productName": "PDFCraft",
+  "productName": "Oxy Pdf",
   "version": "0.1.0",
-  "identifier": "com.pdfcraft.app",
+  "identifier": "com.Oxy Pdf.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
@@ -11,19 +11,27 @@
   "app": {
     "windows": [
       {
-        "title": "PDFCraft",
+        "title": "Oxy Pdf",
         "width": 1200,
         "height": 800
       }
     ],
     "security": {
       "csp": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'self' 'unsafe-eval'; worker-src blob: 'self'; wasm-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' blob:; connect-src 'self' data: blob:;",
-      "dangerousDisableAssetCspModification": ["style-src"]
+      "dangerousDisableAssetCspModification": [
+        "style-src"
+      ]
     }
   },
   "bundle": {
     "active": true,
-    "targets": ["dmg", "msi", "nsis", "deb", "appimage"],
+    "targets": [
+      "dmg",
+      "msi",
+      "nsis",
+      "deb",
+      "appimage"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

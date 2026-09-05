@@ -3,7 +3,7 @@ import path from 'path';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 async function main() {
-  const scratchDir = 'd:/NextProject/pdfcraft/scratch';
+  const scratchDir = 'd:/NextProject/Oxy Pdf/scratch';
   if (!fs.existsSync(scratchDir)) {
     fs.mkdirSync(scratchDir, { recursive: true });
   }
@@ -14,20 +14,20 @@ async function main() {
 
   for (let i = 1; i <= 3; i++) {
     const page = pdfDoc.addPage([612, 792]);
-    page.drawText(`PDFCraft Test Document - Page ${i}`, {
+    page.drawText(`Oxy Pdf Test Document - Page ${i}`, {
       x: 50,
       y: 700,
       size: 24,
       font,
       color: rgb(0.1, 0.5, 0.8),
     });
-    
+
     page.drawText('This is a professional document generated automatically for unit and integration testing.', {
       x: 50,
       y: 650,
       size: 12,
     });
-    
+
     page.drawText(`Generated on: ${new Date().toLocaleString()}`, {
       x: 50,
       y: 600,

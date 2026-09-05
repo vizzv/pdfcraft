@@ -107,7 +107,7 @@ export function meetsWCAGAAA(
 }
 
 /**
- * PDFCraft color palette with verified contrast ratios
+ * Oxy Pdf color palette with verified contrast ratios
  * All colors meet WCAG 2.1 AA requirements
  */
 export const ACCESSIBLE_COLORS = {
@@ -117,42 +117,42 @@ export const ACCESSIBLE_COLORS = {
     // Contrast ratio: 4.5:1 (meets AA for normal text)
     primary: { h: 221, s: 83, l: 53 },
     primaryForeground: { h: 0, s: 0, l: 100 },
-    
+
     // Foreground: Dark blue-gray (222, 47%, 11%) on white
     // Contrast ratio: 16.1:1 (exceeds AAA)
     foreground: { h: 222, s: 47, l: 11 },
     background: { h: 0, s: 0, l: 100 },
-    
+
     // Muted foreground: Gray (215, 16%, 47%) on white
     // Contrast ratio: 4.6:1 (meets AA for normal text)
     mutedForeground: { h: 215, s: 16, l: 47 },
     muted: { h: 210, s: 40, l: 96 },
-    
+
     // Success: Green (142, 76%, 28%) on white
     // Contrast ratio: 5.5:1 (meets AA)
     success: { h: 142, s: 76, l: 28 },
-    
+
     // Destructive: Red (0, 84%, 60%) on white
     // Contrast ratio: 4.5:1 (meets AA)
     destructive: { h: 0, s: 84, l: 50 }, // Adjusted from 60% to 50% for better contrast
-    
+
     // Warning: Orange (38, 92%, 50%) - use with dark text
     // Contrast ratio with dark text: 4.5:1
     warning: { h: 38, s: 92, l: 50 },
   },
-  
+
   // Dark mode
   dark: {
     // Primary: Lighter blue (217, 91%, 60%) on dark background
     // Contrast ratio: 7.2:1 (exceeds AAA)
     primary: { h: 217, s: 91, l: 60 },
     primaryForeground: { h: 222, s: 47, l: 11 },
-    
+
     // Foreground: Light gray (210, 40%, 98%) on dark
     // Contrast ratio: 15.8:1 (exceeds AAA)
     foreground: { h: 210, s: 40, l: 98 },
     background: { h: 222, s: 47, l: 11 },
-    
+
     // Muted foreground: Gray (215, 20%, 65%) on dark
     // Contrast ratio: 6.5:1 (exceeds AA)
     mutedForeground: { h: 215, s: 20, l: 65 },

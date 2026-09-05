@@ -22,7 +22,7 @@ export interface FetchProgress {
 
 export type ProgressCallback = (progress: FetchProgress) => void;
 
-const CACHE_NAME = 'pdfcraft-wasm-cache-v1';
+const CACHE_NAME = 'Oxy Pdf-wasm-cache-v1';
 
 /**
  * Check if the asset is in browser Cache Storage.
@@ -131,7 +131,7 @@ export async function fetchAssembledBlob(
     const [baseUrl, query] = url.split('?');
     const queryString = query ? `?${query}` : '';
     const manifestUrl = `${baseUrl}.manifest.json${queryString}`;
-    
+
     let manifest: ChunkManifest | null = null;
     const isDev = process.env.NODE_ENV === 'development';
     if (!isDev) {
@@ -150,7 +150,7 @@ export async function fetchAssembledBlob(
     // 2. Fetch and assemble from either chunks or directly
     if (manifest) {
         console.log(`[asset-loader] Manifest found for ${manifest.filename}. Reassembling from ${manifest.chunks} chunks...`);
-        
+
         const chunkBytesLoaded = new Array(manifest.chunks).fill(0);
         const totalSize = manifest.totalSize;
 
@@ -197,7 +197,7 @@ export async function fetchAssembledBlob(
 
         const contentLength = res.headers.get('content-length');
         const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
-        
+
         if (!res.body || totalBytes === 0 || !onProgress) {
             const blob = await res.blob();
             onProgress?.({ loadedBytes: blob.size, totalBytes: blob.size });

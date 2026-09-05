@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const SCRATCH_DIR = 'd:\\NextProject\\pdfcraft\\scratch';
+const SCRATCH_DIR = 'd:\\NextProject\\Oxy Pdf\\scratch';
 const pendingPath = path.join(SCRATCH_DIR, 'pending-all.json');
 
 if (!fs.existsSync(pendingPath)) {
@@ -39,7 +39,7 @@ console.log(`Total unique English values: ${sortedValues.length}`);
 // 打印前20个最常出现的英文文本
 console.log(`\nTop 20 most frequent English values:`);
 sortedValues.slice(0, 20).forEach(([val, data], i) => {
-  console.log(`${i+1}. "${val}" (appears in ${data.keys.length} keys, languages: ${Array.from(data.langs).join(', ')})`);
+  console.log(`${i + 1}. "${val}" (appears in ${data.keys.length} keys, languages: ${Array.from(data.langs).join(', ')})`);
 });
 
 // 保存聚合后的结果，方便我们分组翻译

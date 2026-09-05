@@ -9,7 +9,7 @@
  * - display: swap for better performance
  */
 
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google';
 
 /**
  * Inter font - Primary sans-serif font
@@ -37,10 +37,18 @@ export const jetbrainsMono = JetBrains_Mono({
   adjustFontFallback: true,
 });
 
+export const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-serif',
+  preload: true,
+  fallback: ['Georgia', 'serif'],
+});
+
 /**
  * Combined font variables for use in className
  */
-export const fontVariables = `${inter.variable} ${jetbrainsMono.variable}`;
+export const fontVariables = `${inter.variable} ${jetbrainsMono.variable} ${playfair.variable}`;
 
 /**
  * Font class names for direct usage
@@ -57,4 +65,5 @@ export const fontClassNames = {
 export const fontCssVariables = {
   '--font-sans': inter.style.fontFamily,
   '--font-mono': jetbrainsMono.style.fontFamily,
+  '--font-serif': playfair.style.fontFamily,
 } as const;

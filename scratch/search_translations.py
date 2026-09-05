@@ -1,7 +1,7 @@
 import json
 import os
 
-scratch_dir = r"d:\NextProject\pdfcraft\scratch"
+scratch_dir = r"d:\NextProject\Oxy Pdf\scratch"
 
 # Let's check if we have any cache files that have keys like tools.ocrPdf.infoText in es, fr, pt, it.
 # Let's inspect unique-values.json or translation_cache.json.

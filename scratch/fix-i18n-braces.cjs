@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const filePath = 'd:\\NextProject\\pdfcraft\\scratch\\i18n-builder-extended.cjs';
+const filePath = 'd:\\NextProject\\Oxy Pdf\\scratch\\i18n-builder-extended.cjs';
 if (!fs.existsSync(filePath)) {
   console.log("File not found!");
   process.exit(1);

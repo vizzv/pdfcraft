@@ -4,7 +4,7 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-scratch_dir = r"d:\NextProject\pdfcraft\scratch"
+scratch_dir = r"d:\NextProject\Oxy Pdf\scratch"
 
 for i in range(8):
     chk_path = os.path.join(scratch_dir, f"chk_{i}.json")

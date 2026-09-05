@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const languages = ['zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 // 我们设计这 133 个 keys 对应的多语言翻译字典
@@ -483,7 +483,7 @@ const dict = {
   "common.editPdf.fillColorLabel": {
     "en": "Enable Fill Color:", "zh": "启用填充颜色:", "zh-TW": "啟用填充顏色:", "ja": "塗りつぶし色を有効化:", "ko": "채우기 색상 활성화:", "de": "Füllfarbe aktivieren:", "es": "Habilitar color de relleno:", "fr": "Activer la couleur de remplissage :", "id": "Aktifkan Warna Isian:", "it": "Abilita colore di riempimento:", "pt": "Habilitar cor de preenchimento:", "ro": "Activare culoare umplere:", "vi": "Bật màu tô:", "ar": "تمكين لون التعبئة:"
   },
-  
+
   // Rotate PDF
   "tools.rotatePdf.rotate180": {
     "en": "Rotate 180°", "zh": "旋转 180°", "zh-TW": "旋轉 180°", "ja": "180°回転", "ko": "180° 회전", "de": "180° drehen", "es": "Rotar 180°", "fr": "Tourner de 180°", "id": "Putar 180°", "it": "Ruota di 180°", "pt": "Rotacionar 180°", "ro": "Rotire 180°", "vi": "Xoay 180°", "ar": "تدوير 180 درجة"
@@ -528,21 +528,21 @@ languages.forEach(lang => {
     console.warn(`File for ${lang} not found.`);
     return;
   }
-  
+
   const langData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
   let updatedCount = 0;
-  
+
   Object.entries(dict).forEach(([key, translations]) => {
     // 找出目标语言的译文，若该语言在字典中不存在则fallback到英文
     let translatedVal = translations[lang] || translations['en'];
-    
+
     // 如果翻译字典里有这一个key
     if (translatedVal !== undefined) {
       setDeepValue(langData, key, translatedVal);
       updatedCount++;
     }
   });
-  
+
   fs.writeFileSync(langPath, JSON.stringify(langData, null, 2), 'utf8');
   console.log(`Language [${lang}]: Injected ${updatedCount} translations.`);
 });

@@ -119,7 +119,7 @@
     "tool": "certCryptor",
     "key": "decryptPasswordHelp"
   },
-  "默认密码: pdfcraft": {
+  "默认密码: Oxy Pdf": {
     "tool": "certCryptor",
     "key": "passwordPlaceholder"
   },

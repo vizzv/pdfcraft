@@ -1,9 +1,9 @@
 import json
 import os
 
-original_file = "d:/NextProject/pdfcraft/scratch/pending-messages-chunk3.json"
-splits_dir = "d:/NextProject/pdfcraft/scratch/chunk3_splits"
-output_file = "d:/NextProject/pdfcraft/scratch/translated-messages-chunk3-partA.json"
+original_file = "d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk3.json"
+splits_dir = "d:/NextProject/Oxy Pdf/scratch/chunk3_splits"
+output_file = "d:/NextProject/Oxy Pdf/scratch/translated-messages-chunk3-partA.json"
 
 # Load original keys
 with open(original_file, "r", encoding="utf-8") as f:

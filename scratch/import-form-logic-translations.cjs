@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const languages = ['zh', 'zh-TW', 'ja', 'ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 const formLogicDict = {
@@ -70,16 +70,16 @@ console.log("=== INJECTING FORM LOGIC DESIGNER TRANSLATIONS ===");
 languages.forEach(lang => {
   const langPath = path.join(MESSAGES_DIR, `${lang}.json`);
   if (!fs.existsSync(langPath)) return;
-  
+
   const langData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
   let updatedCount = 0;
-  
+
   Object.entries(formLogicDict).forEach(([keyPath, translations]) => {
     const val = translations[lang] || translations['en'];
     setDeepValue(langData, keyPath, val);
     updatedCount++;
   });
-  
+
   fs.writeFileSync(langPath, JSON.stringify(langData, null, 2), 'utf8');
   console.log(`Language [${lang}]: Injected ${updatedCount} keys for FormLogicDesigner.`);
 });

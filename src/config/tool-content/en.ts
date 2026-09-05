@@ -2948,7 +2948,7 @@ export const toolContentEn: Record<string, ToolContent> = {
     faq: [
       { question: 'Is the wax seal just an image or a real signature?', answer: 'Both. The system renders an incredibly realistic 3D wax imprint with normal-mapped depth (visual layer) and encodes an authentic, tamper-proof PKCS#7 cryptographic signature inside the PDF (data layer).' },
       { question: 'What is "Certificate-based Encryption"?', answer: 'It is a passwordless encryption technique. You encrypt the file using the recipient\'s public key. The reader automatically searches for their local private certificate to decrypt the file seamlessly, ensuring robust security.' },
-      { question: 'Can I customize the stamp design?', answer: 'Yes. We provide multiple designs like the PDFCraft watermark or a Royal crest, and you can adjust the wax melting radius and normal-map indentation depth in the panel.' },
+      { question: 'Can I customize the stamp design?', answer: 'Yes. We provide multiple designs like the Oxy Pdf watermark or a Royal crest, and you can adjust the wax melting radius and normal-map indentation depth in the panel.' },
     ],
   },
   'passport-id-composer': {
@@ -3195,7 +3195,7 @@ export const toolContentEn: Record<string, ToolContent> = {
       { title: 'Cross-border shopping audit', description: 'Translate invoice columns and isolate the true cost of e-commerce goods.', icon: 'credit-card' },
       { title: 'International business bookkeeping', description: 'Stamp consistent conversion ledgers on corporate invoices to streamline year-end audits.', icon: 'folder-open' },
     ],
-     faq: [
+    faq: [
       { question: 'How does it detect invoice amounts?', answer: 'It scans character streams for currency symbols and analyzes semantic headings like "Total" or "Due" to locate the invoice final sum.' },
       { question: 'Are exchange rates fetched in real-time?', answer: 'Yes. By default, it retrieves base rates from standard financial APIs. You can also specify custom rates for internal audits.' },
       { question: 'Will the stamped ledger cover important invoice details?', answer: 'The engine scans the page margin to find optimal positioning. The ledger is also semi-transparent, aligning elegantly with your layouts.' },

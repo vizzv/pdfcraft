@@ -4,7 +4,7 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-scratch_dir = r"d:\NextProject\pdfcraft\scratch"
+scratch_dir = r"d:\NextProject\Oxy Pdf\scratch"
 
 # Load pending-messages-chunk3.json
 pending_path = os.path.join(scratch_dir, "pending-messages-chunk3.json")

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const languages = ['ko', 'de', 'es', 'fr', 'id', 'it', 'pt', 'ro', 'vi', 'ar'];
 
 function getKeys(obj, prefix = '') {
@@ -23,17 +23,17 @@ console.log("=== SCANNING CHINESE LEAKS IN TARGET LANGUAGES ===");
 languages.forEach(lang => {
   const langPath = path.join(MESSAGES_DIR, `${lang}.json`);
   if (!fs.existsSync(langPath)) return;
-  
+
   const langData = JSON.parse(fs.readFileSync(langPath, 'utf8'));
   const langKeys = getKeys(langData);
-  
+
   let leaks = [];
   Object.entries(langKeys).forEach(([k, val]) => {
     if (typeof val === 'string' && /[\u4e00-\u9fa5]/.test(val)) {
       leaks.push({ key: k, value: val });
     }
   });
-  
+
   if (leaks.length > 0) {
     console.log(`Language [${lang}]: Found ${leaks.length} leaks containing Chinese characters:`);
     leaks.forEach(l => {

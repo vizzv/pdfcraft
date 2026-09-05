@@ -58,9 +58,9 @@ export default function AboutPageClient({ locale }: AboutPageClientProps) {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-[hsl(var(--color-primary)/0.1)] via-[hsl(var(--color-background))] to-[hsl(var(--color-secondary)/0.1)] py-16 md:py-24">
+        <section className="pt-24">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
+            <div className="max-w-3xl mx-auto text-left">
               <h1 className="text-4xl md:text-5xl font-bold text-[hsl(var(--color-foreground))] mb-6">
                 {t('title', { brand: tCommon('brand') })}
               </h1>
@@ -72,12 +72,12 @@ export default function AboutPageClient({ locale }: AboutPageClientProps) {
         </section>
 
         {/* Mission Section */}
-        <section className="py-16">
+        <section>
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold text-[hsl(var(--color-foreground))] mb-6 text-center">
+              {/* <h2 className="text-3xl font-bold text-[hsl(var(--color-foreground))] mb-6 text-center">
                 {t('mission.title')}
-              </h2>
+              </h2> */}
               <div className="prose prose-lg max-w-none text-[hsl(var(--color-muted-foreground))]">
                 <p className="mb-4">
                   {t('mission.p1', { brand: tCommon('brand') })}
@@ -94,7 +94,7 @@ export default function AboutPageClient({ locale }: AboutPageClientProps) {
         </section>
 
         {/* Values Section */}
-        <section className="py-16 bg-[hsl(var(--color-muted)/0.3)]">
+        <section className="py-16">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-[hsl(var(--color-foreground))] mb-12 text-center">
               {t('values.title')}
@@ -120,32 +120,6 @@ export default function AboutPageClient({ locale }: AboutPageClientProps) {
                   </Card>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* Technology Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold text-[hsl(var(--color-foreground))] mb-6 text-center">
-                {t('technology.title')}
-              </h2>
-              <div className="prose prose-lg max-w-none text-[hsl(var(--color-muted-foreground))]">
-                <p className="mb-4">
-                  {t('technology.description', { brand: tCommon('brand') })}
-                </p>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li>{t.rich('technology.list.nextjs', { strong1: (chunks) => <strong>{chunks}</strong> })}</li>
-                  <li>{t.rich('technology.list.wasm', { strong1: (chunks) => <strong>{chunks}</strong> })}</li>
-                  <li>{t.rich('technology.list.workers', { strong1: (chunks) => <strong>{chunks}</strong> })}</li>
-                  <li>{t.rich('technology.list.pdflib', { strong1: (chunks) => <strong>{chunks}</strong> })}</li>
-                  <li>{t.rich('technology.list.indexeddb', { strong1: (chunks) => <strong>{chunks}</strong> })}</li>
-                </ul>
-                <p>
-                  {t('technology.summary')}
-                </p>
-              </div>
             </div>
           </div>
         </section>

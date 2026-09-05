@@ -5,7 +5,7 @@ import sys
 # Set stdout to UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
 
-scratch_dir = r"d:\NextProject\pdfcraft\scratch"
+scratch_dir = r"d:\NextProject\Oxy Pdf\scratch"
 
 def inspect_file(filename):
     path = os.path.join(scratch_dir, filename)

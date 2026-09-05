@@ -18,8 +18,8 @@ export interface TourStep {
   highlightPadding?: number;
 }
 
-const TOUR_COMPLETED_KEY = 'pdfcraft_tour_completed';
-const TOUR_DISMISSED_KEY = 'pdfcraft_tour_dismissed';
+const TOUR_COMPLETED_KEY = 'Oxy Pdf_tour_completed';
+const TOUR_DISMISSED_KEY = 'Oxy Pdf_tour_dismissed';
 
 /**
  * Check if localStorage is available
@@ -42,7 +42,7 @@ export interface UseGuidedTourReturn {
   currentStepData: TourStep | null;
   totalSteps: number;
   isFirstVisit: boolean;
-  
+
   // Actions
   startTour: () => void;
   nextStep: () => void;
@@ -61,10 +61,10 @@ export function useGuidedTour(steps: TourStep[]): UseGuidedTourReturn {
   // Check if this is the user's first visit
   useEffect(() => {
     if (!isLocalStorageAvailable()) return;
-    
+
     const completed = localStorage.getItem(TOUR_COMPLETED_KEY);
     const dismissed = localStorage.getItem(TOUR_DISMISSED_KEY);
-    
+
     if (!completed && !dismissed) {
       setIsFirstVisit(true);
     }

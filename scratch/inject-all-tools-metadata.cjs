@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOOL_CONTENT_DIR = 'd:\\NextProject\\pdfcraft\\src\\config\\tool-content';
+const TOOL_CONTENT_DIR = 'd:\\NextProject\\Oxy Pdf\\src\\config\\tool-content';
 
 // Loader to get English and Chinese data to fallback or refer to
 const enContentFile = path.join(TOOL_CONTENT_DIR, 'en.ts');
@@ -783,7 +783,7 @@ languages.forEach(lang => {
     }
 
     const item = langObj[lang] || langObj['en'] || { title: toolId, metaDescription: '', keywords: [] };
-    
+
     // We construct the minimal structure copying description/howToUse/useCases/faq from English dynamically
     // Wait, since we are doing this offline, we'll write a representation that references toolContentEn[toolId]
     // for description, howToUse, useCases, faq. This is extremely smart because it avoids copying large blocks of code!
@@ -797,11 +797,11 @@ languages.forEach(lang => {
     //   useCases: toolContentEn['pdf-to-cbz'].useCases,
     //   faq: toolContentEn['pdf-to-cbz'].faq,
     // }
-    
+
     const keywordsStr = JSON.stringify(item.keywords);
     const titleEscaped = item.title.replace(/'/g, "\\'");
     const metaDescEscaped = item.metaDescription.replace(/'/g, "\\'");
-    
+
     const tsRepresentation = `  '${toolId}': {
     title: '${titleEscaped}',
     metaDescription: '${metaDescEscaped}',
@@ -841,11 +841,11 @@ languages.forEach(lang => {
 // 2. Inject core messages translation
 console.log("=== INJECTING HIGH-FREQUENCY CORE MESSAGES TRANSLATIONS ===");
 
-const MESSAGES_DIR = 'd:\\NextProject\\pdfcraft\\messages';
+const MESSAGES_DIR = 'd:\\NextProject\\Oxy Pdf\\messages';
 const messageFiles = fs.readdirSync(MESSAGES_DIR).filter(f => f.endsWith('.json'));
 
 // Load untranslated JSON database to map keys
-const commonUntranslatedDB = JSON.parse(fs.readFileSync('d:\\NextProject\\pdfcraft\\scratch\\common-untranslated.json', 'utf8'));
+const commonUntranslatedDB = JSON.parse(fs.readFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\common-untranslated.json', 'utf8'));
 
 messageFiles.forEach(file => {
   const lang = file.replace('.json', '');
@@ -877,7 +877,7 @@ messageFiles.forEach(file => {
         }
         current[parts[parts.length - 1]] = val;
       }
-      
+
       // Let's set it
       setDeep(langData, keyPath, translatedVal);
       updatedCount++;

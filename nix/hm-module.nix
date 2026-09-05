@@ -1,17 +1,17 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.services.pdfcraft;
+  cfg = config.services.Oxy Pdf;
 in
 {
-  options.services.pdfcraft = {
-    enable = lib.mkEnableOption "PDFCraft - Professional PDF Tools";
+  options.services.Oxy Pdf = {
+    enable = lib.mkEnableOption "Oxy Pdf - Professional PDF Tools";
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.pdfcraft;
-      defaultText = lib.literalExpression "pkgs.pdfcraft";
-      description = "The PDFCraft package to use.";
+      default = pkgs.Oxy Pdf;
+      defaultText = lib.literalExpression "pkgs.Oxy Pdf";
+      description = "The Oxy Pdf package to use.";
     };
 
     port = lib.mkOption {
@@ -24,21 +24,21 @@ in
   config = lib.mkIf cfg.enable {
     nixpkgs.overlays = [
       (final: prev: {
-        pdfcraft = final.callPackage ./package.nix { };
+        Oxy Pdf = final.callPackage ./package.nix { };
       })
     ];
 
-    systemd.user.services.pdfcraft = {
+    systemd.user.services.Oxy Pdf = {
       Unit = {
-        Description = "PDFCraft PDF Tools";
+        Description = "Oxy Pdf PDF Tools";
         After = [ "network.target" ];
       };
 
       Service = {
-        ExecStart = "${cfg.package}/bin/pdfcraft";
+        ExecStart = "${cfg.package}/bin/Oxy Pdf";
         Restart = "on-failure";
         Environment = [
-          "PDFCRAFT_PORT=${toString cfg.port}"
+          "Oxy Pdf_PORT=${toString cfg.port}"
         ];
       };
 

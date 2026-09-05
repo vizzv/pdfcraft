@@ -1,8 +1,8 @@
 import json
 
 def main():
-    input_path = r'd:/NextProject/pdfcraft/scratch/google-translated.json'
-    output_path = r'd:/NextProject/pdfcraft/scratch/translated-messages-chunk4-partC.json'
+    input_path = r'd:/NextProject/Oxy Pdf/scratch/google-translated.json'
+    output_path = r'd:/NextProject/Oxy Pdf/scratch/translated-messages-chunk4-partC.json'
     
     with open(input_path, 'r', encoding='utf-8') as f:
         data = json.load(f)

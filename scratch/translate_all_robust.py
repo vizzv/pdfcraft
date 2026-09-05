@@ -8,9 +8,9 @@ from deep_translator import GoogleTranslator
 # Set stdout to UTF-8 to prevent console print encoding errors
 sys.stdout.reconfigure(encoding='utf-8')
 
-INPUT_PATH = "d:/NextProject/pdfcraft/scratch/pending-messages-chunk4.json"
-PROGRESS_PATH = "d:/NextProject/pdfcraft/scratch/progress.json"
-OUTPUT_PATH = "d:/NextProject/pdfcraft/scratch/translated-messages-chunk4-partA.json"
+INPUT_PATH = "d:/NextProject/Oxy Pdf/scratch/pending-messages-chunk4.json"
+PROGRESS_PATH = "d:/NextProject/Oxy Pdf/scratch/progress.json"
+OUTPUT_PATH = "d:/NextProject/Oxy Pdf/scratch/translated-messages-chunk4-partA.json"
 
 def fix_placeholders(source, target):
     placeholders = re.findall(r'\{[a-zA-Z0-9_]+}', source)

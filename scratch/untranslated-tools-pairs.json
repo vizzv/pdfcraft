@@ -6595,8 +6595,8 @@
     ]
   },
   {
-    "en": "Default password: pdfcraft",
-    "zh": "默认密码: pdfcraft",
+    "en": "Default password: Oxy Pdf",
+    "zh": "默认密码: Oxy Pdf",
     "keys": [
       "common.certCryptor.passwordPlaceholder"
     ],

@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Search, Menu, X, Command, Github } from 'lucide-react';
 import { type Locale } from '@/lib/i18n/config';
@@ -12,6 +12,7 @@ import { searchTools, SearchResult } from '@/lib/utils/search';
 import { getToolContent } from '@/config/tool-content';
 import { getAllTools } from '@/config/tools';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { LanguageSelector } from '@/components/layout/LanguageSelector';
 
 export interface HeaderProps {
   locale: Locale;
@@ -21,12 +22,15 @@ export interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => {
   const t = useTranslations('common');
   const router = useRouter();
+  const pathname = usePathname();
+  console.log(pathname);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [localizedTools, setLocalizedTools] = useState<Record<string, { title: string; description: string }>>({});
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -158,31 +162,33 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
   const navItems = [
     { href: `/${locale}`, label: t('navigation.home') },
     { href: `/${locale}/tools`, label: t('navigation.tools') },
-    { href: `/${locale}/workflow`, label: t('navigation.workflow') || 'Workflow' },
+    // { href: `/${locale}/workflow`, label: t('navigation.workflow') || 'Workflow' },
     { href: `/${locale}/about`, label: t('navigation.about') },
     { href: `/${locale}/faq`, label: t('navigation.faq') },
   ];
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${scrolled
-        ? 'bg-[hsl(var(--color-background))]/80 backdrop-blur-md border-b border-[hsl(var(--color-border))/0.5] shadow-sm'
-        : 'bg-transparent border-transparent'
-        }`}
+      className={`fixed z-50 transition-all duration-500 w-full px-4 ${scrolled ? 'top-4' : 'top-0 px-0'}`}
       role="banner"
     >
-      <div className="container mx-auto px-4">
-        <div className="flex h-20 items-center justify-between">
+      <div
+        className={`w-full mx-auto transition-[max-width] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${scrolled ? 'max-w-6xl' : 'max-w-full'
+          }`}
+      >        <div className={`flex items-center justify-between transition-all duration-500 ${scrolled
+        ? 'h-14 px-6 rounded-full bg-[hsl(var(--color-background))/0.6] backdrop-blur-xl border border-[hsl(var(--color-border))/0.4] shadow-lg shadow-black/20'
+        : 'h-24 px-4 bg-transparent border-transparent'}`}>
+
           {/* Logo and Brand */}
           <div className="flex flex-1 items-center gap-2">
             <Link
               href={`/${locale}`}
-              className="group flex items-center gap-2.5 text-xl font-bold text-[hsl(var(--color-foreground))] hover:opacity-90 transition-opacity"
+              className="group flex items-center gap-2.5 font-sans font-bold text-[hsl(var(--color-foreground))] hover:text-white transition-colors"
               aria-label={`${t('brand')} - ${t('navigation.home')}`}
             >
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(var(--color-primary))] to-[hsl(var(--color-accent))] shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--color-primary))] shadow-[0_0_15px_rgba(124,58,237,0.3)] transition-transform group-hover:scale-105">
                 <svg
-                  className="h-5 w-5 text-white"
+                  className="h-4 w-4 text-white"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -194,39 +200,107 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                   <polyline points="14 2 14 8 20 8" />
                 </svg>
               </div>
-              <span className="text-xl tracking-tight" data-testid="brand-name">
+              <span className="text-xl tracking-tight uppercase" data-testid="brand-name">
                 {t('brand')}
               </span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with Mega-Menu Support */}
           <nav
-            className={`hidden md:flex items-center gap-1 rounded-full border border-[hsl(var(--color-border))/0.4] bg-[hsl(var(--color-background))/0.5] p-1.5 backdrop-blur-sm shadow-sm transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'
-              }`}
+            className={`hidden md:flex items-center gap-2 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'} transition-all`}
             role="navigation"
             aria-label="Main navigation"
+            onMouseLeave={() => setActiveDropdown(null)}
           >
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="px-4 py-1.5 text-sm font-medium text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5] rounded-full transition-all"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              // Strip trailing slashes so /en/ and /en both match
+              const cleanPath = pathname.replace(/\/$/, '') || '/';
+              const cleanHref = item.href.replace(/\/$/, '') || '/';
+              const isActive = cleanHref === `/${locale}`
+                ? cleanPath === cleanHref
+                : cleanPath.startsWith(cleanHref);
+
+              return (
+                <div
+                  key={item.href}
+                  className="relative"
+                  onMouseEnter={() => setActiveDropdown(item.label)}
+                >
+                  {/* Active / hover pill */}
+                  {(activeDropdown === item.label || isActive) && (
+                    <div className={`absolute inset-0 rounded-full w-full h-full -z-10 ${isActive ? 'bg-[hsl(var(--color-accent-green))/0.12]' : 'bg-[#282f3a]/80'
+                      }`} />
+                  )}
+
+                  <Link
+                    href={item.href}
+                    className={`px-4 py-2 block text-[11px] font-mono tracking-widest font-semibold transition-colors rounded-full z-10 
+                    ${isActive
+                        ? 'text-[hsl(var(--color-accent-green))]'
+                        : activeDropdown === item.label
+                          ? 'text-white'
+                          : 'text-[hsl(var(--color-muted-foreground))] hover:text-white'
+                      }`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {item.label}
+                    {/* {isActive && (
+                      <span className="block mx-auto mt-0.5 w-1 h-1 rounded-full bg-[hsl(var(--color-accent-green))]" />
+                    )} */}
+                  </Link>
+
+                  {/* Dropdown Panel (Simulating Mega-Menu) */}
+                  {activeDropdown === item.label && item.label === t('navigation.tools') && (
+                    <div className="absolute top-full -left-20 pt-6 cursor-default">
+                      <div className="w-[450px] rounded-2xl bg-[#0a0c10]/95 backdrop-blur-3xl border border-[hsl(var(--color-border))] shadow-2xl overflow-hidden shadow-black p-4 grid grid-cols-2 gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
+
+                        <div className="col-span-2 px-3 py-2 mb-2 pb-3 border-b border-[hsl(var(--color-border))]">
+                          <span className="text-[10px] uppercase font-mono tracking-wider text-[hsl(var(--color-accent-blue))]">PDF Workflows</span>
+                        </div>
+
+                        <Link href={`/${locale}/tools/merge`} className="group flex items-start gap-4 p-3 rounded-xl hover:bg-[#12151c] transition-colors">
+                          <div className="p-2 rounded-lg bg-[hsl(var(--color-accent-blue))/0.1] text-[hsl(var(--color-accent-blue))] group-hover:scale-110 transition-transform">
+                            <Command size={16} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-sans font-medium text-white mb-0.5">Merge PDFs</h4>
+                            <p className="text-xs font-sans text-muted-foreground">Combine multiple docs into one.</p>
+                          </div>
+                        </Link>
+
+                        <Link href={`/${locale}/tools/compress`} className="group flex items-start gap-4 p-3 rounded-xl hover:bg-[#12151c] transition-colors">
+                          <div className="p-2 rounded-lg bg-[hsl(var(--color-accent-gold))/0.1] text-[hsl(var(--color-accent-gold))] group-hover:scale-110 transition-transform">
+                            <Search size={16} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-sans font-medium text-white mb-0.5">Compress</h4>
+                            <p className="text-xs font-sans text-muted-foreground">Reduce file size losslessly.</p>
+                          </div>
+                        </Link>
+
+                        <div className="col-span-2 mt-2">
+                          <Link href={`/${locale}/tools`} className="block w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono uppercase tracking-widest text-white transition-colors">
+                            View all 24 tools →
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* Right side actions */}
-          <div className="flex flex-1 items-center justify-end gap-3">
+          <div className="flex flex-1 items-center justify-end gap-1 md:gap-3">
             {/* Search */}
             {showSearch && (
               <div className="relative" ref={searchContainerRef}>
                 {isSearchOpen ? (
                   <div className="fixed md:absolute left-4 right-4 md:left-auto md:right-0 top-[22px] md:top-1/2 md:-translate-y-1/2 z-50 md:origin-right animate-in fade-in slide-in-from-right-4 duration-200">
                     <div className="relative w-full md:w-96">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--color-muted-foreground))]" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--color-primary))]" />
                       <input
                         ref={searchInputRef}
                         type="search"
@@ -234,7 +308,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder={t('search.placeholder') || 'Search tools...'}
-                        className="w-full pl-10 pr-10 py-2.5 text-sm rounded-xl border border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] shadow-lg focus:outline-none focus:ring-2 focus:ring-[hsl(var(--color-primary))]"
+                        className="w-full pl-10 pr-10 py-2.5 text-sm font-mono rounded-xl border border-[hsl(var(--color-primary))] bg-[hsl(var(--color-background))] text-white shadow-[0_0_20px_rgba(124,58,237,0.15)] focus:outline-none focus:ring-1 focus:ring-[hsl(var(--color-primary))]"
                         aria-label="Search tools"
                         autoComplete="off"
                       />
@@ -250,7 +324,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
 
                       {/* Search Results Dropdown */}
                       {searchResults.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-[hsl(var(--color-background))] border border-[hsl(var(--color-border))] rounded-xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 max-h-[60vh] overflow-y-auto">
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-[hsl(var(--color-card))] border border-[hsl(var(--color-border))] rounded-xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 max-h-[60vh] overflow-y-auto">
                           <ul className="py-2" role="listbox">
                             {searchResults.map((result, index) => {
                               const localized = localizedTools[result.tool.id];
@@ -265,7 +339,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                                     className={`
                                       w-full px-4 py-2.5 text-left flex items-center gap-3 transition-colors
                                       ${index === selectedIndex
-                                        ? 'bg-[hsl(var(--color-primary))/0.1] text-[hsl(var(--color-primary))]'
+                                        ? 'bg-[hsl(var(--color-primary))/0.1] text-white'
                                         : 'hover:bg-[hsl(var(--color-muted))] text-[hsl(var(--color-foreground))]'
                                       }
                                     `}
@@ -296,42 +370,31 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                     size="sm"
                     onClick={handleSearchToggle}
                     aria-label="Open search"
-                    className="relative text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]"
+                    className="relative text-[hsl(var(--color-muted-foreground))] hover:text-white hover:bg-[hsl(var(--color-muted))/0.5] rounded-full h-8 px-3"
                   >
-                    <Search className="h-5 w-5" aria-hidden="true" />
-                    <span className="ml-2 hidden lg:inline-block text-xs text-[hsl(var(--color-muted-foreground))/0.5] border border-[hsl(var(--color-border))] rounded px-1.5 py-0.5">⌘K</span>
+                    <Search className="h-4 w-4" aria-hidden="true" />
+                    <span className="ml-2 hidden lg:inline-block text-[10px] uppercase font-mono tracking-widest opacity-80">CMD+K</span>
                   </Button>
                 )}
               </div>
             )}
 
-            {/* Recent Files Dropdown */}
-            <RecentFilesDropdown
-              locale={locale}
-              translations={{
-                title: t('recentFiles.title') || 'Recent Files',
-                empty: t('recentFiles.empty') || 'No recent files',
-                clearAll: t('recentFiles.clearAll') || 'Clear all',
-                processedWith: t('recentFiles.processedWith') || 'Processed with',
-              }}
-            />
-
             {/* GitHub Repository Link */}
-            <a
-              href="https://github.com/PDFCraftTool/pdfcraft"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:flex items-center justify-center h-9 w-9 rounded-lg text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5] transition-all"
-              aria-label="GitHub Repository"
-            >
-              <Github className="h-5 w-5" aria-hidden="true" />
-            </a>
+
+            {/* Language Selector */}
+            <LanguageSelector currentLocale={locale} />
 
             {/* Theme Toggle */}
             <ThemeToggle />
 
-            {/* Language Selector placeholder */}
-            <div id="language-selector-slot" />
+            {/* Call to action Pill */}
+            <div className="hidden lg:block ml-2">
+              <Link href={`/${locale}/tools`}>
+                <button className="px-4 w-[125px] py-2 flex-shrink-0! rounded-full text-xs font-semibold uppercase tracking-wider text-black bg-[hsl(var(--color-primary))] hover:bg-[hsl(var(--color-primary-hover))] transition-all shadow-[0_0_10px_rgba(124,58,237,0.4)]">
+                  Get Started
+                </button>
+              </Link>
+            </div>
 
             {/* Mobile Menu Toggle */}
             <Button
@@ -356,7 +419,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
         {isMobileMenuOpen && (
           <nav
             id="mobile-menu"
-            className="md:hidden py-4 border-t border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] backdrop-blur-xl shadow-lg"
+            className="md:hidden mt-4 py-4 rounded-2xl border border-[hsl(var(--color-border))] bg-[hsl(var(--color-background))] backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.5)]"
             role="navigation"
             aria-label="Mobile navigation"
           >
@@ -365,26 +428,25 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="block px-4 py-3 text-base font-medium text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))] rounded-lg transition-colors"
+                    className="block px-4 py-3 text-base font-medium uppercase tracking-wider text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))] hover:text-white rounded-lg transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
                 </li>
               ))}
-              {/* GitHub Link in Mobile Menu */}
-              <li>
+              {/* <li>
                 <a
-                  href="https://github.com/PDFCraftTool/pdfcraft"
+                  href="https://github.com/Oxy PdfTool/Oxy Pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 px-4 py-3 text-base font-medium text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))] rounded-lg transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 text-base font-medium uppercase tracking-wider text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))] hover:text-white rounded-lg transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Github className="h-5 w-5" aria-hidden="true" />
                   GitHub
                 </a>
-              </li>
+              </li> */}
             </ul>
           </nav>
         )}

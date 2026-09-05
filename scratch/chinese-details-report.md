@@ -43,7 +43,7 @@
 | 173 | `{ id: 'bronze', label: '古铜赤金', bg: 'bg-amber-800 border-amber-700 text-amber-100' }` |
 | 195 | `启用证书双钥锁 (256位强加密)` |
 | 207 | `<label className="text-[10px] text-neutral-400">设置解密所持密码 (PFX 解密密钥)</label>` |
-| 210 | `placeholder="默认密码: pdfcraft"` |
+| 210 | `placeholder="默认密码: Oxy Pdf"` |
 | 257 | `<span>数字证书盖印坐标: X: {sealPos.x}px, Y: {sealPos.y}px</span>` |
 | 258 | `<span>在白纸处点击以重定位印章</span>` |
 

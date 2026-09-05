@@ -27,8 +27,8 @@ def translate_task(key, source_text, sl, lang):
     return key, lang, translated
 
 def main():
-    input_path = r'd:/NextProject/pdfcraft/scratch/pending-messages-chunk4.json'
-    output_path = r'd:/NextProject/pdfcraft/scratch/google-translated.json'
+    input_path = r'd:/NextProject/Oxy Pdf/scratch/pending-messages-chunk4.json'
+    output_path = r'd:/NextProject/Oxy Pdf/scratch/google-translated.json'
     
     with open(input_path, 'r', encoding='utf-8') as f:
         data = json.load(f)

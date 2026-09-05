@@ -1,14 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOOL_CONTENT_DIR = 'd:\\NextProject\\pdfcraft\\src\\config\\tool-content';
+const TOOL_CONTENT_DIR = 'd:\\NextProject\\Oxy Pdf\\src\\config\\tool-content';
 
 // Parse en.ts and zh.ts to memory objects using the evaluation method
 function loadToolContent(lang) {
   const filePath = path.join(TOOL_CONTENT_DIR, `${lang}.ts`);
   if (!fs.existsSync(filePath)) return {};
   const content = fs.readFileSync(filePath, 'utf8');
-  
+
   const varMap = {
     'en': 'toolContentEn',
     'zh': 'toolContentZh'
@@ -30,14 +30,14 @@ function loadToolContent(lang) {
 const enContent = loadToolContent('en');
 const zhContent = loadToolContent('zh');
 
-const missingReport = JSON.parse(fs.readFileSync('d:\\NextProject\\pdfcraft\\scratch\\missing-tool-contents.json', 'utf8'));
+const missingReport = JSON.parse(fs.readFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\missing-tool-contents.json', 'utf8'));
 
 const pendingTranslations = {};
 
 Object.entries(missingReport).forEach(([lang, missingIds]) => {
   if (missingIds.length === 0) return;
   pendingTranslations[lang] = {};
-  
+
   missingIds.forEach(id => {
     pendingTranslations[lang][id] = {
       en: enContent[id] || null,
@@ -46,7 +46,7 @@ Object.entries(missingReport).forEach(([lang, missingIds]) => {
   });
 });
 
-fs.writeFileSync('d:\\NextProject\\pdfcraft\\scratch\\pending-tool-contents.json', JSON.stringify(pendingTranslations, null, 2), 'utf8');
+fs.writeFileSync('d:\\NextProject\\Oxy Pdf\\scratch\\pending-tool-contents.json', JSON.stringify(pendingTranslations, null, 2), 'utf8');
 console.log("Successfully extracted pending tool contents to scratch/pending-tool-contents.json");
 
 // Output total count

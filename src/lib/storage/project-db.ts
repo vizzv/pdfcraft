@@ -25,7 +25,7 @@ export interface ProjectFileMetadata {
   lastModified: number;
 }
 
-const DB_NAME = 'pdfcraft_projects';
+const DB_NAME = 'Oxy Pdf_projects';
 const DB_VERSION = 1;
 const STORE_NAME = 'projects';
 
@@ -51,7 +51,7 @@ function openDatabase(): Promise<IDBDatabase> {
 
     request.onupgradeneeded = (event) => {
       const db = (event.target as IDBOpenDBRequest).result;
-      
+
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
         store.createIndex('toolId', 'toolId', { unique: false });
@@ -78,7 +78,7 @@ function generateProjectId(): string {
  */
 export async function saveProject(project: Omit<ProjectState, 'id' | 'createdAt' | 'updatedAt'>): Promise<ProjectState> {
   const db = await openDatabase();
-  
+
   const now = new Date().toISOString();
   const fullProject: ProjectState = {
     ...project,
@@ -111,7 +111,7 @@ export async function saveProject(project: Omit<ProjectState, 'id' | 'createdAt'
  */
 export async function updateProject(id: string, updates: Partial<Omit<ProjectState, 'id' | 'createdAt'>>): Promise<ProjectState | null> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
@@ -154,7 +154,7 @@ export async function updateProject(id: string, updates: Partial<Omit<ProjectSta
  */
 export async function getProject(id: string): Promise<ProjectState | null> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readonly');
     const store = transaction.objectStore(STORE_NAME);
@@ -179,7 +179,7 @@ export async function getProject(id: string): Promise<ProjectState | null> {
  */
 export async function getAllProjects(): Promise<ProjectState[]> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readonly');
     const store = transaction.objectStore(STORE_NAME);
@@ -188,7 +188,7 @@ export async function getAllProjects(): Promise<ProjectState[]> {
     request.onsuccess = () => {
       const projects = request.result as ProjectState[];
       // Sort by updatedAt descending
-      projects.sort((a, b) => 
+      projects.sort((a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       );
       resolve(projects);
@@ -209,7 +209,7 @@ export async function getAllProjects(): Promise<ProjectState[]> {
  */
 export async function getProjectsByTool(toolId: string): Promise<ProjectState[]> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readonly');
     const store = transaction.objectStore(STORE_NAME);
@@ -218,7 +218,7 @@ export async function getProjectsByTool(toolId: string): Promise<ProjectState[]>
 
     request.onsuccess = () => {
       const projects = request.result as ProjectState[];
-      projects.sort((a, b) => 
+      projects.sort((a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       );
       resolve(projects);
@@ -239,7 +239,7 @@ export async function getProjectsByTool(toolId: string): Promise<ProjectState[]>
  */
 export async function getInProgressProjects(): Promise<ProjectState[]> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readonly');
     const store = transaction.objectStore(STORE_NAME);
@@ -248,7 +248,7 @@ export async function getInProgressProjects(): Promise<ProjectState[]> {
 
     request.onsuccess = () => {
       const projects = request.result as ProjectState[];
-      projects.sort((a, b) => 
+      projects.sort((a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       );
       resolve(projects);
@@ -269,7 +269,7 @@ export async function getInProgressProjects(): Promise<ProjectState[]> {
  */
 export async function deleteProject(id: string): Promise<void> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);
@@ -294,7 +294,7 @@ export async function deleteProject(id: string): Promise<void> {
  */
 export async function clearAllProjects(): Promise<void> {
   const db = await openDatabase();
-  
+
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORE_NAME], 'readwrite');
     const store = transaction.objectStore(STORE_NAME);

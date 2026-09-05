@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const dir = 'd:/NextProject/pdfcraft/scratch';
+const dir = 'd:/NextProject/Oxy Pdf/scratch';
 const languages = ['id', 'ro', 'vi', 'ar'];
 
 const merged = {

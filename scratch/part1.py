@@ -316,5 +316,5 @@ part1 = {
   }
 }
 
-with open('d:/NextProject/pdfcraft/scratch/part1.json', 'w', encoding='utf-8') as f:
+with open('d:/NextProject/Oxy Pdf/scratch/part1.json', 'w', encoding='utf-8') as f:
     json.dump(part1, f, ensure_ascii=False, indent=2)

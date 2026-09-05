@@ -7,7 +7,7 @@ if (!chunk) {
   process.exit(1);
 }
 
-const dir = 'd:/NextProject/pdfcraft/scratch';
+const dir = 'd:/NextProject/Oxy Pdf/scratch';
 const partAPath = path.join(dir, `translated-messages-chunk${chunk}-partA.json`);
 const partBPath = path.join(dir, `translated-messages-chunk${chunk}-partB.json`);
 const partCPath = path.join(dir, `translated-messages-chunk${chunk}-partC.json`);

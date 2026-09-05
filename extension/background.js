@@ -1,73 +1,74 @@
-// PDFCraft Chrome Extension - Background Service Worker
+// Oxy Pdf Chrome Extension - Background Service Worker
 
-const PDFCRAFT_URL = 'https://pdfcraft.devtoolcafe.com/en';
+const Oxy Pdf_URL = 'https://Oxy Pdf.devtoolcafe.com/en';
 
 // Create context menu when extension is installed
 chrome.runtime.onInstalled.addListener(() => {
     // Create main context menu item
     chrome.contextMenus.create({
-        id: 'pdfcraft-open',
-        title: 'Open with PDFCraft',
+        id: 'Oxy Pdf-open',
+        title: 'Open with Oxy Pdf',
         contexts: ['link', 'page']
     });
 
     // Create submenu for specific tools
     chrome.contextMenus.create({
-        id: 'pdfcraft-merge',
-        parentId: 'pdfcraft-open',
+        id: 'Oxy Pdf-merge',
+        parentId: 'Oxy Pdf-open',
         title: 'Merge PDFs',
         contexts: ['link', 'page']
     });
 
     chrome.contextMenus.create({
-        id: 'pdfcraft-compress',
-        parentId: 'pdfcraft-open',
+        id: 'Oxy Pdf-compress',
+        parentId: 'Oxy Pdf-open',
         title: 'Compress PDF',
         contexts: ['link', 'page']
     });
 
     chrome.contextMenus.create({
-        id: 'pdfcraft-convert',
-        parentId: 'pdfcraft-open',
+        id: 'Oxy Pdf-convert',
+        parentId: 'Oxy Pdf-open',
         title: 'Convert to PDF',
         contexts: ['link', 'page']
     });
 
     chrome.contextMenus.create({
-        id: 'pdfcraft-all-tools',
-        parentId: 'pdfcraft-open',
+        id: 'Oxy Pdf-all-tools',
+        parentId: 'Oxy Pdf-open',
         title: 'All Tools →',
         contexts: ['link', 'page']
     });
 
-    console.log('PDFCraft context menus created');
+    console.log('Oxy Pdf context menus created');
 });
 
 // Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    let url = PDFCRAFT_URL;
+    let url = Oxy Pdf_URL;
 
     switch (info.menuItemId) {
-        case 'pdfcraft-merge':
-            url = `${PDFCRAFT_URL}/tools/merge-pdf`;
+        case 'Oxy Pdf-merge':
+            url = `${Oxy Pdf_URL
+    }/tools/merge - pdf`;
             break;
-        case 'pdfcraft-compress':
-            url = `${PDFCRAFT_URL}/tools/compress-pdf`;
+        case 'Oxy Pdf-compress':
+            url = `${Oxy Pdf_URL } /tools/compress - pdf`;
             break;
-        case 'pdfcraft-convert':
-            url = `${PDFCRAFT_URL}/tools/jpg-to-pdf`;
+        case 'Oxy Pdf-convert':
+            url = `${Oxy Pdf_URL } /tools/jpg - to - pdf`;
             break;
-        case 'pdfcraft-all-tools':
-        case 'pdfcraft-open':
-            url = PDFCRAFT_URL;
+        case 'Oxy Pdf-all-tools':
+        case 'Oxy Pdf-open':
+            url = Oxy Pdf_URL;
             break;
         default:
-            url = PDFCRAFT_URL;
+            url = Oxy Pdf_URL;
     }
 
-    // Open PDFCraft in a new tab
+    // Open Oxy Pdf in a new tab
     chrome.tabs.create({ url: url });
 });
 
 // Log when service worker starts
-console.log('PDFCraft background service worker started');
+console.log('Oxy Pdf background service worker started');
